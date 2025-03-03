@@ -1,0 +1,41 @@
+{
+  "name": "@my-money-my-time/source",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "api": "nx run api:serve:development"
+  },
+  "private": true,
+  "devDependencies": {
+    "@nx/esbuild": "20.4.6",
+    "@nx/jest": "20.4.6",
+    "@nx/js": "20.4.6",
+    "@nx/node": "20.4.6",
+    "@nx/react": "^20.4.6",
+    "@swc-node/register": "~1.9.1",
+    "@swc/core": "~1.5.7",
+    "@swc/helpers": "~0.5.11",
+    "@swc/jest": "~0.2.36",
+    "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.12",
+    "@types/node": "~18.16.9",
+    "esbuild": "^0.19.2",
+    "jest": "^29.7.0",
+    "jest-environment-node": "^29.7.0",
+    "nx": "20.4.6",
+    "prisma": "^6.4.1",
+    "ts-jest": "^29.1.0",
+    "ts-node": "10.9.1",
+    "tslib": "^2.3.0",
+    "typescript": "~5.7.2"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "dependencies": {
+    "express": "^4.21.2",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  }
+}
