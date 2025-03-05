@@ -9,14 +9,14 @@ export class TransactionRepositoryFakerDB
       typeTransaction: "income",
       value: 100,
       description: "Teste FakerDB 01",
-      dateTime: ""
+      dateTime: "2025-03-03T21:38:24.633Z"
     },
     {
       id: 2,
       typeTransaction: "expense",
       value: 15,
       description: "Teste FakerDB 02",
-      dateTime: ""
+      dateTime: "2025-03-03T21:38:24.633Z"
     }
   ]
 
