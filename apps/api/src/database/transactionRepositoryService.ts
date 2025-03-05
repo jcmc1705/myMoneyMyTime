@@ -1,10 +1,10 @@
-import { TransactionType, TransactionTypeDB } from '../types/transactionType';
+import { TransactionType } from '../types/transactionType';
 
 export interface TransactionRepository {
-  calculateSumByTransactionType(typeTransaction: 'income' | 'expense'): Promise<number> | number;
-  getAllTransactions(): Promise<TransactionType[]> | TransactionTypeDB[];
-  getTransaction(transaction_id: number): Promise<TransactionType | null> | TransactionTypeDB;
-  createTransaction(input: TransactionType): Promise<TransactionType> | TransactionTypeDB;
-  updateTransaction(transaction_id: number, input: TransactionType): Promise<TransactionType> | TransactionTypeDB;
-  deleteTransaction(transaction_id: number): Promise<TransactionType> | void;
+  calculateSumByTransactionType(typeTransaction: 'income' | 'expense'): Promise<number>;
+  getAllTransactions(): Promise<TransactionType[]>;
+  getTransaction(transaction_id: number): Promise<TransactionType | null>;
+  createTransaction(input: TransactionType): Promise<TransactionType>;
+  updateTransaction(transaction_id: number, input: TransactionType): Promise<TransactionType>;
+  deleteTransaction(transaction_id: number): void;
 }

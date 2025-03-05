@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "api": "nx run api:serve:development"
+    "api": "nx run api:serve:development",
+    "api-test": "nx test api --watch"
   },
   "private": true,
   "devDependencies": {

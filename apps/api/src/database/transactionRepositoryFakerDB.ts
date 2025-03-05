@@ -1,26 +1,26 @@
-import { TransactionType, TransactionTypeDB } from "../types/transactionType";
+import { TransactionType } from "../types/transactionType";
 import { TransactionRepository } from "./transactionRepositoryService";
 
 export class TransactionRepositoryFakerDB
   implements TransactionRepository {
-  database: TransactionTypeDB[] = [
+  database: TransactionType[] = [
     {
       id: 1,
       typeTransaction: "income",
       value: 100,
-      dateTime: "2025-01-26T21:51:50.720Z",
-      description: "Teste FakerDB 01"
+      description: "Teste FakerDB 01",
+      dateTime: ""
     },
     {
       id: 2,
       typeTransaction: "expense",
       value: 15,
-      dateTime: "2025-01-26T21:51:50.720Z",
-      description: "Teste FakerDB 02"
+      description: "Teste FakerDB 02",
+      dateTime: ""
     }
   ]
 
-  calculateSumByTransactionType = (typeTransaction: 'income' | 'expense') => {
+  async calculateSumByTransactionType(typeTransaction: 'income' | 'expense') {
     let sum = 0
     this.database.forEach(data => {
       if (data.typeTransaction === typeTransaction) {
@@ -30,21 +30,21 @@ export class TransactionRepositoryFakerDB
     return sum
   };
 
-  getAllTransactions = () => {
+  async getAllTransactions() {
     return this.database
   }
 
-  getTransaction = (transaction_id: number) => {
+  async getTransaction(transaction_id: number) {
     const transaction = this.database.filter(data => data.id === transaction_id)
     return transaction[0]
   }
 
-  createTransaction = (input: TransactionType) => {
+  async createTransaction(input: TransactionType) {
     this.database.push({ ...input, dateTime: this.getDateTime(), id: Math.floor(Math.random() * 100) })
     return this.database[this.database.length - 1]
   }
 
-  updateTransaction = (transaction_id: number, input: TransactionType) => {
+  async updateTransaction(transaction_id: number, input: TransactionType) {
     let transactionIndex: any;
     this.database.forEach((data, index) => {
       if (data.id === transaction_id) {
@@ -57,12 +57,12 @@ export class TransactionRepositoryFakerDB
     return this.database[transactionIndex]
   }
 
-  deleteTransaction = (transaction_id: number) => {
+  async deleteTransaction(transaction_id: number) {
     const newDB = this.database.filter(data => data.id !== transaction_id)
     this.database = newDB
   }
 
-  getDateTime = () => {
+  private getDateTime = () => {
     const date = new Date()
     const year = date.getFullYear()
     const month = date.getMonth()

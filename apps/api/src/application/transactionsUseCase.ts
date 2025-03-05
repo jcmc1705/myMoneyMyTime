@@ -2,24 +2,24 @@ import { TransactionRepository } from '../database/transactionRepositoryService'
 import { TransactionType } from '../types/transactionType';
 
 export class TransactionsUseCase {
-  transactionRepository: TransactionRepository;
+  private readonly transactionRepository: TransactionRepository;
   constructor(transactionRepository: TransactionRepository) {
     this.transactionRepository = transactionRepository;
   }
 
-  isValidValue = (value: number) => value > 0;
-  isValidTypeTransaction = (typeTransaction: string) => {
+  private isValidValue = (value: number) => value > 0;
+  private isValidTypeTransaction = (typeTransaction: string) => {
     return typeTransaction === 'expense' || typeTransaction === 'income';
   };
-  isValidDescription = (description: string | null) => {
+  private isValidDescription = (description: string | null) => {
     if (description === null) return false
     return description.length >= 3 && description.length <= 50
   }
-  isValidTransactionId = (transaction_id: number) => {
+  private isValidTransactionId = (transaction_id: number) => {
     return transaction_id > 0 && Number.isInteger(transaction_id)
   }
 
-  validateTransaction(input: TransactionType) {
+  private validateTransaction(input: TransactionType) {
     if (!this.isValidValue(input.value)) throw new Error('Valor deve ser um número maior que zero!');
     if (!this.isValidTypeTransaction(input.typeTransaction))
       throw new Error('Tipo de transação inválida!');
