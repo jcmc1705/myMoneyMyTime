@@ -34,7 +34,7 @@ export class TransactionRepositoryFakerDB
     return this.database
   }
 
-  async getTransaction(transaction_id: number) {
+  async getTransactionById(transaction_id: number) {
     const transaction = this.database.filter(data => data.id === transaction_id)
     return transaction[0]
   }
@@ -45,11 +45,9 @@ export class TransactionRepositoryFakerDB
   }
 
   async updateTransaction(transaction_id: number, input: TransactionType) {
-    let transactionIndex: any;
-    this.database.forEach((data, index) => {
-      if (data.id === transaction_id) {
-        transactionIndex = index
-      }
+    let transactionIndex: any
+    this.database.forEach((data: TransactionType, index: any) => {
+      if (data.id === transaction_id) transactionIndex = index
     })
     this.database[transactionIndex].description = input.description
     this.database[transactionIndex].value = input.value
@@ -60,6 +58,7 @@ export class TransactionRepositoryFakerDB
   async deleteTransaction(transaction_id: number) {
     const newDB = this.database.filter(data => data.id !== transaction_id)
     this.database = newDB
+
   }
 
   private getDateTime = () => {

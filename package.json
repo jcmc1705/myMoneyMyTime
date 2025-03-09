@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "api": "nx run api:serve:development",
-    "api-test": "nx test api --watch"
+    "api-test": "nx test api --watch",
+    "dev": "npx nx serve front"
   },
   "private": true,
   "devDependencies": {
@@ -45,6 +46,7 @@
   ],
   "dependencies": {
     "express": "^4.21.2",
+    "faker-br": "^0.4.1",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-router-dom": "6.11.2"

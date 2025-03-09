@@ -1,7 +1,7 @@
 import { TransactionRepository } from '../database/transactionRepositoryService';
 
 export class GetDashboardUseCase {
-  transactionRepository: TransactionRepository;
+  private readonly transactionRepository: TransactionRepository;
   constructor(transactionRepository: TransactionRepository) {
     this.transactionRepository = transactionRepository;
   }

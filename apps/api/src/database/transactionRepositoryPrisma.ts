@@ -22,7 +22,7 @@ export class TransactionRepositoryPrisma
     return await this.prisma.transactions.findMany();
   };
 
-  async getTransaction(transaction_id: number) {
+  async getTransactionById(transaction_id: number) {
     return await this.prisma.transactions.findUnique({
       where: { id: transaction_id },
     });

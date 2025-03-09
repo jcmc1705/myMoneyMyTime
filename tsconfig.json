@@ -9,5 +9,11 @@
     {
       "path": "./apps/front"
     }
-  ]
+  ],
+  "compilerOptions": {
+    "typeRoots": [
+      "./node_modules/@types",
+      "./types"
+    ]
+  }
 }

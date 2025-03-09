@@ -12,17 +12,15 @@ export class TransactionsUseCase {
     return typeTransaction === 'expense' || typeTransaction === 'income';
   };
   private isValidDescription = (description: string | null) => {
-    if (description === null) return false
-    return description.length >= 3 && description.length <= 50
+    return description !== null && description.length >= 3 && description.length <= 50
   }
   private isValidTransactionId = (transaction_id: number) => {
-    return transaction_id > 0 && Number.isInteger(transaction_id)
+    return Number.isInteger(transaction_id) && transaction_id > 0
   }
 
   private validateTransaction(input: TransactionType) {
     if (!this.isValidValue(input.value)) throw new Error('Valor deve ser um número maior que zero!');
-    if (!this.isValidTypeTransaction(input.typeTransaction))
-      throw new Error('Tipo de transação inválida!');
+    if (!this.isValidTypeTransaction(input.typeTransaction)) throw new Error('Tipo de transação inválida!');
     if (!this.isValidDescription(input.description)) throw new Error('Descrição deve possuir entre 3 e 50 caracteres!');
   }
 
@@ -41,7 +39,7 @@ export class TransactionsUseCase {
 
   async getTransaction(transaction_id: number) {
     if (!this.isValidTransactionId(transaction_id)) throw new Error('Id inválido!')
-    const transaction = await this.transactionRepository.getTransaction(transaction_id)
+    const transaction = await this.transactionRepository.getTransactionById(transaction_id)
     if (!transaction) throw new Error('Transação não encontrada!')
     return transaction
   }
@@ -58,7 +56,7 @@ export class TransactionsUseCase {
 
   async deleteTransaction(transaction_id: number) {
     await this.getTransaction(transaction_id)
-    await this.transactionRepository.deleteTransaction(transaction_id)
+    this.transactionRepository.deleteTransaction(transaction_id)
     return {
       message: 'Transação excluída!',
     };
