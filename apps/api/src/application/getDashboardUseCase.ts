@@ -1,10 +1,7 @@
 import { TransactionRepository } from '../database/transactionRepositoryService';
 
 export class GetDashboardUseCase {
-  private readonly transactionRepository: TransactionRepository;
-  constructor(transactionRepository: TransactionRepository) {
-    this.transactionRepository = transactionRepository;
-  }
+  constructor(readonly transactionRepository: TransactionRepository) { }
   async execute() {
     const [sumIncomes, sumExpenses] = await Promise.all([
       this.transactionRepository.calculateSumByTransactionType('income'),

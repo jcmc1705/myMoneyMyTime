@@ -2,10 +2,7 @@ import { TransactionRepository } from '../database/transactionRepositoryService'
 import { TransactionType } from '../types/transactionType';
 
 export class TransactionsUseCase {
-  private readonly transactionRepository: TransactionRepository;
-  constructor(transactionRepository: TransactionRepository) {
-    this.transactionRepository = transactionRepository;
-  }
+  constructor(readonly transactionRepository: TransactionRepository) {}
 
   private isValidValue = (value: number) => value > 0;
   private isValidTypeTransaction = (typeTransaction: string) => {

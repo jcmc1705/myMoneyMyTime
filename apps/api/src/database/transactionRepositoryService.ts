@@ -7,4 +7,4 @@ export interface TransactionRepository {
   createTransaction(input: TransactionType): Promise<TransactionType>;
   updateTransaction(transaction_id: number, input: TransactionType): Promise<TransactionType>;
   deleteTransaction(transaction_id: number): void;
-}
+} 
