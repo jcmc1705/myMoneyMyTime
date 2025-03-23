@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import { TransactionRepositoryPrisma } from '../database/transactionRepositoryPrisma';
-//import { TransactionRepositoryFakerDB } from '../database/transactionRepositoryFakerDB';
 import { GetDashboardUseCase } from '../application/getDashboardUseCase';
 
 const router = Router();

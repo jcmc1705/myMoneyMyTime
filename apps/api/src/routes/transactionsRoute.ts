@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import { TransactionRepositoryPrisma } from '../database/transactionRepositoryPrisma';
-//import { TransactionRepositoryFakerDB } from '../database/transactionRepositoryFakerDB';
 import { TransactionsUseCase } from '../application/transactionsUseCase';
 
 const router = Router();
+
 const transactionsUseCase = new TransactionsUseCase(
   new TransactionRepositoryPrisma()
 );

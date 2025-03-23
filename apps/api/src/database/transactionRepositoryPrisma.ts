@@ -27,7 +27,7 @@ export class TransactionRepositoryPrisma implements TransactionRepository {
     });
   }
 
-  async createTransaction(input: TransactionType) {
+  async createTransaction(input: any) {
     return await this.prisma.transactions.create({
       data: {
         typeTransaction: input.typeTransaction,

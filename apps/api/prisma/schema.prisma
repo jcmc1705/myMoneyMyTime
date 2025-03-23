@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  seed     = "ts-node prisma/seed.ts"
 }
 
 datasource db {
@@ -12,7 +13,7 @@ model Transactions {
   typeTransaction TypeTransaction
   value          Float
   dateTime       DateTime      @default(now())
-  description    String?       @db.VarChar(150)
+  description    String        @db.VarChar(150)
 }
 
 enum TypeTransaction {

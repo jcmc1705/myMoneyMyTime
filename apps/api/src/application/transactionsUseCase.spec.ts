@@ -24,8 +24,8 @@ describe('TransactionsUseCase', () => {
   })
   it('getTransaction should get transaction by id', async () => {
     const transactionsUseCase = new TransactionsUseCase(new TransactionRepositoryFakerDB())
-    const id = 1
-    const response = await transactionsUseCase.getTransaction(id)
+    const transactionId = 1
+    const response = await transactionsUseCase.getTransaction(transactionId)
     expect(response).toEqual(
       {
         description: "Teste FakerDB 01",
@@ -37,9 +37,9 @@ describe('TransactionsUseCase', () => {
     )
   })
   it('getTransaction should throw error "Transação não encontrada!"', async () => {
-    const id = 3
+    const transactionId = 3
     const transactionsUseCase = new TransactionsUseCase(new TransactionRepositoryFakerDB())
-    await expect(transactionsUseCase.getTransaction(id)).rejects.toThrow('Transação não encontrada!');
+    await expect(transactionsUseCase.getTransaction(transactionId)).rejects.toThrow('Transação não encontrada!');
   })
   it('createTransaction should save transaction', async () => {
     const transactionsUseCase = new TransactionsUseCase(new TransactionRepositoryFakerDB())
@@ -98,8 +98,8 @@ describe('TransactionsUseCase', () => {
         id: 1,
         dateTime: "2025-03-09T12:00:00"
       };
-      const transaction_id = 1
-      const response = await transactionsUseCase.updateTransaction(transaction_id, transaction)
+      const transactionId = 1
+      const response = await transactionsUseCase.updateTransaction(transactionId, transaction)
       expect(response.message).toEqual('Transação atualizada!')
       expect(response.data.description).toEqual(transaction.description)
       expect(response.data.value).toEqual(transaction.value)
@@ -117,8 +117,8 @@ describe('TransactionsUseCase', () => {
         id: 50,
         dateTime: "2025-03-09T12:00:00"
       };
-      const transaction_id = 1
-      await expect(transactionsUseCase.updateTransaction(transaction_id, transaction)).rejects.toThrow('Valor deve ser um número maior que zero!');
+      const transactionId = 1
+      await expect(transactionsUseCase.updateTransaction(transactionId, transaction)).rejects.toThrow('Valor deve ser um número maior que zero!');
     }
   })
   it('updateTransaction should throw error "Descrição deve possuir entre 3 e 50 caracteres!"', async () => {
@@ -132,8 +132,8 @@ describe('TransactionsUseCase', () => {
         id: 50,
         dateTime: "2025-03-09T12:00:00"
       };
-      const transaction_id = 1
-      await expect(transactionsUseCase.updateTransaction(transaction_id, transaction)).rejects.toThrow('Descrição deve possuir entre 3 e 50 caracteres!');
+      const transactionId = 1
+      await expect(transactionsUseCase.updateTransaction(transactionId, transaction)).rejects.toThrow('Descrição deve possuir entre 3 e 50 caracteres!');
     }
   })
   it('updateTransaction should throw error "Id inválido"', async () => {
@@ -147,19 +147,19 @@ describe('TransactionsUseCase', () => {
         id: 50,
         dateTime: "2025-03-09T12:00:00"
       };
-      const transaction_id = -1
-      await expect(transactionsUseCase.updateTransaction(transaction_id, transaction)).rejects.toThrow('Id inválido!');
+      const transactionId = -1
+      await expect(transactionsUseCase.updateTransaction(transactionId, transaction)).rejects.toThrow('Id inválido!');
     }
   })
   it('deleteTransaction should delete transaction', async () => {
     const transactionsUseCase = new TransactionsUseCase(new TransactionRepositoryFakerDB())
-    const transaction_id = 2
-    const response = await transactionsUseCase.deleteTransaction(transaction_id);
+    const transactionId = 2
+    const response = await transactionsUseCase.deleteTransaction(transactionId);
     expect(response.message).toEqual('Transação excluída!')
   })
   it('deleteTransaction should throw error "Id inválido"', async () => {
     const transactionsUseCase = new TransactionsUseCase(new TransactionRepositoryFakerDB())
-    const transaction_id = -1
-    await expect(transactionsUseCase.deleteTransaction(transaction_id)).rejects.toThrow('Id inválido!');
+    const transactionId = -1
+    await expect(transactionsUseCase.deleteTransaction(transactionId)).rejects.toThrow('Id inválido!');
   })
 })
