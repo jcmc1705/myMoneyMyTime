@@ -1,7 +1,7 @@
-import { TransactionType } from "../types/transactionType";
+import { TransactionType } from "../../types/transactionType";
 import { TransactionRepository } from "./transactionRepositoryService";
 
-export class TransactionRepositoryFakerDB
+export class AdapterFakerDB
   implements TransactionRepository {
   database: TransactionType[] = [
     {

@@ -1,4 +1,4 @@
-import { TransactionType } from '../types/transactionType';
+import { TransactionType } from '../../types/transactionType';
 
 export interface TransactionRepository {
   calculateSumByTransactionType(typeTransaction: 'income' | 'expense'): Promise<number>;

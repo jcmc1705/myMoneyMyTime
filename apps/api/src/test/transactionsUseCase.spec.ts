@@ -1,10 +1,10 @@
-import { TransactionRepositoryFakerDB } from "../database/transactionRepositoryFakerDB"
-import { TransactionsUseCase } from "./transactionsUseCase"
+import { AdapterFakerDB } from "../infra/database/AdapterFakerDB"
+import { TransactionsUseCase } from "../application/usecase/transactionsUseCase"
 import { TransactionType } from "../types/transactionType"
 
 describe('TransactionsUseCase', () => {
   it('getTransactions should get all transactions', async () => {
-    const transactionsUseCase = new TransactionsUseCase(new TransactionRepositoryFakerDB())
+    const transactionsUseCase = new TransactionsUseCase(new AdapterFakerDB())
     const response = await transactionsUseCase.getTransactions()
     expect(response).toEqual([
       {
@@ -23,7 +23,7 @@ describe('TransactionsUseCase', () => {
     ])
   })
   it('getTransaction should get transaction by id', async () => {
-    const transactionsUseCase = new TransactionsUseCase(new TransactionRepositoryFakerDB())
+    const transactionsUseCase = new TransactionsUseCase(new AdapterFakerDB())
     const transactionId = 1
     const response = await transactionsUseCase.getTransaction(transactionId)
     expect(response).toEqual(
@@ -38,11 +38,11 @@ describe('TransactionsUseCase', () => {
   })
   it('getTransaction should throw error "Transação não encontrada!"', async () => {
     const transactionId = 3
-    const transactionsUseCase = new TransactionsUseCase(new TransactionRepositoryFakerDB())
+    const transactionsUseCase = new TransactionsUseCase(new AdapterFakerDB())
     await expect(transactionsUseCase.getTransaction(transactionId)).rejects.toThrow('Transação não encontrada!');
   })
   it('createTransaction should save transaction', async () => {
-    const transactionsUseCase = new TransactionsUseCase(new TransactionRepositoryFakerDB())
+    const transactionsUseCase = new TransactionsUseCase(new AdapterFakerDB())
     const typeTransaction: string = "expense";
     if (typeTransaction === "expense" || typeTransaction === "income") {
       const transaction: TransactionType = {
@@ -60,7 +60,7 @@ describe('TransactionsUseCase', () => {
     }
   })
   it('createTransaction should throw error "Valor deve ser um número maior que zero!"', async () => {
-    const transactionsUseCase = new TransactionsUseCase(new TransactionRepositoryFakerDB())
+    const transactionsUseCase = new TransactionsUseCase(new AdapterFakerDB())
     const typeTransaction: string = "expense";
     if (typeTransaction === "expense" || typeTransaction === "income") {
       const transaction: TransactionType = {
@@ -74,7 +74,7 @@ describe('TransactionsUseCase', () => {
     }
   })
   it('createTransaction should throw error "Descrição deve possuir entre 3 e 50 caracteres!"', async () => {
-    const transactionsUseCase = new TransactionsUseCase(new TransactionRepositoryFakerDB())
+    const transactionsUseCase = new TransactionsUseCase(new AdapterFakerDB())
     const typeTransaction: string = "expense";
     if (typeTransaction === "expense" || typeTransaction === "income") {
       const transaction: TransactionType = {
@@ -88,7 +88,7 @@ describe('TransactionsUseCase', () => {
     }
   })
   it('updateTransaction should update transaction', async () => {
-    const transactionsUseCase = new TransactionsUseCase(new TransactionRepositoryFakerDB())
+    const transactionsUseCase = new TransactionsUseCase(new AdapterFakerDB())
     const typeTransaction: string = "expense";
     if (typeTransaction === "expense" || typeTransaction === "income") {
       const transaction: TransactionType = {
@@ -107,7 +107,7 @@ describe('TransactionsUseCase', () => {
     }
   })
   it('updateTransaction should throw error "Valor deve ser um número maior que zero!"', async () => {
-    const transactionsUseCase = new TransactionsUseCase(new TransactionRepositoryFakerDB())
+    const transactionsUseCase = new TransactionsUseCase(new AdapterFakerDB())
     const typeTransaction: string = "expense";
     if (typeTransaction === "expense" || typeTransaction === "income") {
       const transaction: TransactionType = {
@@ -122,7 +122,7 @@ describe('TransactionsUseCase', () => {
     }
   })
   it('updateTransaction should throw error "Descrição deve possuir entre 3 e 50 caracteres!"', async () => {
-    const transactionsUseCase = new TransactionsUseCase(new TransactionRepositoryFakerDB())
+    const transactionsUseCase = new TransactionsUseCase(new AdapterFakerDB())
     const typeTransaction: string = "expense";
     if (typeTransaction === "expense" || typeTransaction === "income") {
       const transaction: TransactionType = {
@@ -137,7 +137,7 @@ describe('TransactionsUseCase', () => {
     }
   })
   it('updateTransaction should throw error "Id inválido"', async () => {
-    const transactionsUseCase = new TransactionsUseCase(new TransactionRepositoryFakerDB())
+    const transactionsUseCase = new TransactionsUseCase(new AdapterFakerDB())
     const typeTransaction: string = "expense";
     if (typeTransaction === "expense" || typeTransaction === "income") {
       const transaction: TransactionType = {
@@ -152,13 +152,13 @@ describe('TransactionsUseCase', () => {
     }
   })
   it('deleteTransaction should delete transaction', async () => {
-    const transactionsUseCase = new TransactionsUseCase(new TransactionRepositoryFakerDB())
+    const transactionsUseCase = new TransactionsUseCase(new AdapterFakerDB())
     const transactionId = 2
     const response = await transactionsUseCase.deleteTransaction(transactionId);
     expect(response.message).toEqual('Transação excluída!')
   })
   it('deleteTransaction should throw error "Id inválido"', async () => {
-    const transactionsUseCase = new TransactionsUseCase(new TransactionRepositoryFakerDB())
+    const transactionsUseCase = new TransactionsUseCase(new AdapterFakerDB())
     const transactionId = -1
     await expect(transactionsUseCase.deleteTransaction(transactionId)).rejects.toThrow('Id inválido!');
   })

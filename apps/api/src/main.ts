@@ -1,21 +1,16 @@
-import express from 'express';
-import cors from 'cors'
+import { TransactionsUseCase } from "./application/usecase/transactionsUseCase";
+import { GetDashboardUseCase } from "./application/usecase/getDashboardUseCase";
+import { AdapterPrisma } from "./infra/database/AdapterPrisma";
+import { ExpressAdapter } from "./infra/http/httpServer";
+import TransactionsController from "./infra/controller/TransactionsController";
+import DashboardController from "./infra/controller/Dashboard";
 
-import transactionsRoute from './routes/transactionsRoute';
-import dashboardRoute from './routes/dashboardRoute'
+// Entry Point - Composition Root
 
-const host = process.env.HOST ?? '127.0.0.1';
-const port = process.env.PORT ? Number(process.env.PORT) : 3000;
-export const baseUrl = `http://${host}:${port}`
-
-const app = express();
-
-app.use(cors());
-app.use(express.json());
-
-app.use('/api/transactions', transactionsRoute)
-app.use('/api/dashboard', dashboardRoute)
-
-app.listen(port, host, () => {
-  console.log(`[ ready ] ${baseUrl}`);
-});
+const httpServer = new ExpressAdapter();
+const transactionRepository = new AdapterPrisma()
+const transactionsUseCase = new TransactionsUseCase(transactionRepository);
+const getDashboardUseCase = new GetDashboardUseCase(transactionRepository)
+new TransactionsController(httpServer, transactionsUseCase);
+new DashboardController(httpServer, getDashboardUseCase)
+httpServer.listen(3000);

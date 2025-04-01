@@ -1,5 +1,5 @@
-import { TransactionRepository } from '../database/transactionRepositoryService';
-import { TransactionType } from '../types/transactionType';
+import { TransactionRepository } from '../../infra/database/transactionRepositoryService';
+import { TransactionType } from '../../types/transactionType'
 
 export class TransactionsUseCase {
   constructor(readonly transactionRepository: TransactionRepository) {}

@@ -1,5 +1,5 @@
 import axios from "axios"
-import { TransactionRepositoryPrisma } from '../database/transactionRepositoryPrisma'
+import { AdapterPrisma } from '../infra/database/AdapterPrisma'
 import { TransactionType } from "../types/transactionType"
 
 axios.defaults.validateStatus = () => true
@@ -13,14 +13,14 @@ describe('transactionsRoute', () => {
             typeTransaction: 'income'
         }
         const outputPostTransaction = await axios.post(`${baseUrl}/transactions`, input)
-        expect(outputPostTransaction.status).toBe(201)
+        expect(outputPostTransaction.status).toBe(200)
         const transactionId = outputPostTransaction.data.data.id
         const outputGetTransaction = await axios.get(`${baseUrl}/transactions/${transactionId}`)
         expect(outputGetTransaction.data.id).toBeDefined()
         expect(outputGetTransaction.data.description).toEqual(input.description)
         expect(outputGetTransaction.data.value).toEqual(input.value)
         expect(outputGetTransaction.data.typeTransaction).toEqual(input.typeTransaction)
-        const transactionRepositoryPrisma = new TransactionRepositoryPrisma()
+        const transactionRepositoryPrisma = new AdapterPrisma()
         await transactionRepositoryPrisma.deleteTransaction(transactionId)
     })
 
@@ -62,7 +62,7 @@ describe('transactionsRoute', () => {
     it('get "/transactions/:id" should throw error "Transação não encontrada!"', async () => {
         const transactionId = 100
         const outputGetTransaction = await axios.get(`${baseUrl}/transactions/${transactionId}`)
-        expect(outputGetTransaction.status).toEqual(404)
+        expect(outputGetTransaction.status).toEqual(422)
         expect(outputGetTransaction.data.message).toEqual('Transação não encontrada!')
     });
 
@@ -72,7 +72,7 @@ describe('transactionsRoute', () => {
             value: 50,
             typeTransaction: 'expense',
         }
-        const transactionRepositoryPrisma = new TransactionRepositoryPrisma()
+        const transactionRepositoryPrisma = new AdapterPrisma()
         const transactionCreated = await transactionRepositoryPrisma.createTransaction(inputCreate)
         const transactionId = transactionCreated.id
         const inputUpdate = {
@@ -98,7 +98,7 @@ describe('transactionsRoute', () => {
         }
         const transactionId = 16
         const outputPutTransaction = await axios.put(`${baseUrl}/transactions/${transactionId}`, input)
-        expect(outputPutTransaction.status).toBe(400)
+        expect(outputPutTransaction.status).toBe(422)
         expect(outputPutTransaction.data.message).toEqual('Tipo de transação inválida!')
     })
 
@@ -108,7 +108,7 @@ describe('transactionsRoute', () => {
             value: 20,
             typeTransaction: 'income',
         }
-        const transactionRepositoryPrisma = new TransactionRepositoryPrisma()
+        const transactionRepositoryPrisma = new AdapterPrisma()
         const transactionCreated = await transactionRepositoryPrisma.createTransaction(inputCreate)
         const transactionId = transactionCreated.id
         const outputDeleteTransaction = await axios.delete(`${baseUrl}/transactions/${transactionId}`)
@@ -122,7 +122,7 @@ describe('transactionsRoute', () => {
     it('delete "/transactions/:id" should throw error "Transação não encontrada!" ', async () => {
         const transactionId = 100
         const outputDeleteTransaction = await axios.delete(`${baseUrl}/transactions/${transactionId}`)
-        expect(outputDeleteTransaction.status).toEqual(404)
+        expect(outputDeleteTransaction.status).toEqual(422)
         expect(outputDeleteTransaction.data.message).toEqual('Transação não encontrada!')
     })
 })
