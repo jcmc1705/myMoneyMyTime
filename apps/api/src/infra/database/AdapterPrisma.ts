@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-import { TransactionRepository } from './transactionRepositoryService';
-import { TransactionType } from '../../types/transactionType';
+import { TransactionRepository } from '../repository/transactionRepositoryService';
+import { InputTransactionTypes } from '../../types/transactionType';
 
 export class AdapterPrisma implements TransactionRepository {
   prisma: PrismaClient = new PrismaClient();
@@ -27,7 +27,7 @@ export class AdapterPrisma implements TransactionRepository {
     });
   }
 
-  async createTransaction(input: any) {
+  async createTransaction(input: InputTransactionTypes) {
     return await this.prisma.transactions.create({
       data: {
         typeTransaction: input.typeTransaction,
@@ -37,7 +37,7 @@ export class AdapterPrisma implements TransactionRepository {
     });
   };
 
-  async updateTransaction(transaction_id: number, input: TransactionType) {
+  async updateTransaction(transaction_id: number, input: InputTransactionTypes) {
     return await this.prisma.transactions.update({
       where: { id: transaction_id },
       data: {

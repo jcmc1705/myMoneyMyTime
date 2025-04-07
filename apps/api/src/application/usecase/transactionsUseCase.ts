@@ -1,5 +1,5 @@
-import { TransactionRepository } from '../../infra/database/transactionRepositoryService';
-import { TransactionType } from '../../types/transactionType'
+import { TransactionRepository } from '../../infra/repository/transactionRepositoryService';
+import { InputTransactionTypes } from '../../types/transactionType';
 
 export class TransactionsUseCase {
   constructor(readonly transactionRepository: TransactionRepository) {}
@@ -15,7 +15,7 @@ export class TransactionsUseCase {
     return Number.isInteger(transaction_id) && transaction_id > 0
   }
 
-  private validateTransaction(input: TransactionType) {
+  private validateTransaction(input: InputTransactionTypes) {
     if (!this.isValidValue(input.value)) throw new Error('Valor deve ser um número maior que zero!');
     if (!this.isValidTypeTransaction(input.typeTransaction)) throw new Error('Tipo de transação inválida!');
     if (!this.isValidDescription(input.description)) throw new Error('Descrição deve possuir entre 3 e 50 caracteres!');
@@ -25,7 +25,7 @@ export class TransactionsUseCase {
     return await this.transactionRepository.getAllTransactions();
   }
 
-  async createTransaction(input: TransactionType) {
+  async createTransaction(input: InputTransactionTypes) {
     this.validateTransaction(input)
     const transaction = await this.transactionRepository.createTransaction(input);
     return {
@@ -41,7 +41,7 @@ export class TransactionsUseCase {
     return transaction
   }
 
-  async updateTransaction(transaction_id: number, input: TransactionType) {
+  async updateTransaction(transaction_id: number, input: InputTransactionTypes) {
     await this.getTransaction(transaction_id)
     this.validateTransaction(input)
     const transaction = await this.transactionRepository.updateTransaction(transaction_id, input)

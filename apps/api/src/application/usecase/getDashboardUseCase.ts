@@ -1,4 +1,4 @@
-import { TransactionRepository } from '../../infra/database/transactionRepositoryService';
+import { TransactionRepository } from '../../infra/repository/transactionRepositoryService';
 
 export class GetDashboardUseCase {
   constructor(readonly transactionRepository: TransactionRepository) { }

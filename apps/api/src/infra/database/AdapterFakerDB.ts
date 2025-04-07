@@ -1,5 +1,5 @@
-import { TransactionType } from "../../types/transactionType";
-import { TransactionRepository } from "./transactionRepositoryService";
+import { InputTransactionTypes, TransactionType } from "../../types/transactionType";
+import { TransactionRepository } from "../repository/transactionRepositoryService";
 
 export class AdapterFakerDB
   implements TransactionRepository {
@@ -39,12 +39,12 @@ export class AdapterFakerDB
     return transaction[0]
   }
 
-  async createTransaction(input: TransactionType) {
+  async createTransaction(input: InputTransactionTypes) {
     this.database.push({ ...input, dateTime: this.getDateTime(), id: Math.floor(Math.random() * 100) })
     return this.database[this.database.length - 1]
   }
 
-  async updateTransaction(transaction_id: number, input: TransactionType) {
+  async updateTransaction(transaction_id: number, input: InputTransactionTypes) {
     let transactionIndex: any
     this.database.forEach((data: TransactionType, index: any) => {
       if (data.id === transaction_id) transactionIndex = index

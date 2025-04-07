@@ -5,3 +5,9 @@ export type TransactionType = {
   typeTransaction: 'income' | 'expense';
   dateTime: Date | string
 };
+
+export type InputTransactionTypes = {
+  description: string,
+  value: number,
+  typeTransaction: "income" | "expense"
+}
