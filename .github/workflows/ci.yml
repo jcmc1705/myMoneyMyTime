@@ -1,42 +1,87 @@
-name: CI
+name: CI Pipeline
 
 on:
-  push:
-    branches:
-      - master
   pull_request:
-
-permissions:
-  actions: read
-  contents: read
+    branches: [ main ]
 
 jobs:
-  main:
+  analysis:
+    name: 🔍 Análise Estática (Lint + Prettier)
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      
-      
+    - uses: actions/checkout@v3
 
-      # This enables task distribution via Nx Cloud
-      # Run this command as early as possible, before dependencies are installed
-      # Learn more at https://nx.dev/ci/reference/nx-cloud-cli#npx-nxcloud-startcirun
-      # Uncomment this line to enable task distribution
-      # - run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="build"
+    - name: Setup Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
 
-      
-      # Cache node_modules
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-       
-      - run: npm ci --legacy-peer-deps
-      - uses: nrwl/nx-set-shas@v4
+    - name: Instalar dependências
+      run: npm install
 
-      # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
-      # - run: npx nx-cloud record -- echo Hello World
-      # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
-      - run: npx nx affected -t lint test build
+    - name: Rodar ESLint
+      run: npx nx lint nome-do-projeto
+
+    - name: Checar Prettier
+      run: npx prettier --check .
+
+  unit-tests:
+    name: Testes Unitários
+    runs-on: ubuntu-latest
+    needs: analysis
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Instalar dependências
+      run: npm install
+
+    - name: Rodar testes unitários
+      run: npx nx test nome-do-projeto --code-coverage
+
+  integration-tests:
+    name: Testes Integrados
+    runs-on: ubuntu-latest
+    needs: unit-tests
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Instalar dependências
+      run: npm install
+
+    - name: Rodar testes integrados
+      run: npm run test:integration
+
+  coverage-check:
+    name: Verificar cobertura mínima
+    runs-on: ubuntu-latest
+    needs: [unit-tests, integration-tests]
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Instalar dependências
+      run: npm install
+
+    - name: Rodar testes para gerar cobertura
+      run: npx nx test nome-do-projeto --code-coverage
+
+    - name: Verificar cobertura mínima (80%)
+      run: |
+        COVERAGE=$(npx jest --coverage --coverageReporters=text-summary | grep 'Statements' | awk '{print $2}' | sed 's/%//')
+        echo "Cobertura atual: $COVERAGE%"
+        if (( $(echo "$COVERAGE < 80" | bc -l) )); then
+          echo "Cobertura abaixo de 80%!"
+          exit 1
+        fi
