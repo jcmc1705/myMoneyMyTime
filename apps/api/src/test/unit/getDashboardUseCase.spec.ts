@@ -1,5 +1,5 @@
 import { AdapterFakerDB } from "../../infra/database/AdapterFakerDB"
-import { GetDashboardUseCase } from "../../application/usecase/getDashboardUseCase"
+import { GetDashboardUseCase } from "../../application/usercase/getDashboardUserCase"
 
 describe('getDashboardUseCase', () => {
     it('execute should get data from dashboard', async () => {

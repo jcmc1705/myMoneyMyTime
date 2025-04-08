@@ -1,4 +1,4 @@
-import { GetDashboardUseCase } from "../../application/usecase/getDashboardUseCase";
+import { GetDashboardUseCase } from "../../application/usercase/getDashboardUserCase";
 import HttpServer from "../http/httpServer";
 
 // Interface Adapter

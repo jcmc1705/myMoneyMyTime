@@ -1,4 +1,4 @@
-import { TransactionsUseCase } from "../../application/usecase/transactionsUseCase"
+import { TransactionsUseCase } from "../../application/usercase/transactionsUserCase"
 import { AdapterPrisma } from "../../infra/database/AdapterPrisma"
 import { InputTransactionTypes } from "../../types/transactionType"
 

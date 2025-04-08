@@ -1,4 +1,4 @@
-import { TransactionsUseCase } from "../../application/usecase/transactionsUseCase";
+import { TransactionsUseCase } from "../../application/usercase/transactionsUserCase";
 import HttpServer from "../http/httpServer";
 
 // Interface Adapter

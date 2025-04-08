@@ -1,5 +1,5 @@
 import { AdapterFakerDB } from "../../infra/database/AdapterFakerDB"
-import { TransactionsUseCase } from "../../application/usecase/transactionsUseCase"
+import { TransactionsUseCase } from "../../application/usercase/transactionsUserCase"
 import { InputTransactionTypes } from "../../types/transactionType"
 
 describe('TransactionsUseCase', () => {
