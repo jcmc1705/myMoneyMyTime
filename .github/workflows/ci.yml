@@ -16,9 +16,18 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 20
-      - name: run install, build and test
-        run: |
-            npm install
-            npx nx build api
-            npx nx teste api
-            continue-on-error: false
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Rodar ESLint
+        run: npx nx lint api
+
+      - name: Verificar formatação com Prettier
+        run: npx prettier --check .
+
+      - name: Buildar projeto
+        run: npx nx build api
+
+      - name: Rodar testes
+        run: npx nx test api
