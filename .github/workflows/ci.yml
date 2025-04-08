@@ -21,3 +21,4 @@ jobs:
             npm install
             npx nx build api
             npx nx teste api
+            continue-on-error: false
