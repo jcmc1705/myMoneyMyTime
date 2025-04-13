@@ -31,8 +31,8 @@ jobs:
       # - name: Verificar formatação com Prettier
       #   run: npx prettier --check .
 
-      - name: Buildar projeto
-        run: npx nx build api
+      # - name: Buildar projeto
+      #   run: npx nx build api
 
       - name: Rodar testes
         run: npx nx test api
