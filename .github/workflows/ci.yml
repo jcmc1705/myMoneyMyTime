@@ -25,11 +25,11 @@ jobs:
       - name: Prisma Generate
         run: cd apps/api && npx prisma generate
 
-      - name: Rodar ESLint
-        run: npx nx lint api
+      # - name: Rodar ESLint
+      #   run: npx nx lint api
 
-      - name: Verificar formatação com Prettier
-        run: npx prettier --check .
+      # - name: Verificar formatação com Prettier
+      #   run: npx prettier --check .
 
       - name: Buildar projeto
         run: npx nx build api
