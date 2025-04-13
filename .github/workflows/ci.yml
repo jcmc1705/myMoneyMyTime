@@ -6,7 +6,9 @@ on:
   pull_request:
     branches: [ main ]
 
-
+env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  
 jobs:
   main:
     runs-on: ubuntu-latest
@@ -21,7 +23,9 @@ jobs:
         run: npm install
 
       - name: Prisma Generate
-        run: npx prisma generate
+        run: 
+         cd apps/api
+         npx prisma generate
 
       - name: Rodar ESLint
         run: npx nx lint api
