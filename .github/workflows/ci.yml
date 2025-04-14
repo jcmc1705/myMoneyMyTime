@@ -22,6 +22,17 @@ jobs:
       - name: Instalar dependências
         run: npm install
 
+      - name: Start services with Docker Compose
+        run: docker-compose up -d
+        working-directory: ./
+
+      - name: Wait for MySQL to be ready
+        run: |
+          echo "Aguardando MySQL..."
+          until docker exec $(docker ps -qf "name=mysql") mysqladmin ping -h"localhost" --silent; do
+            sleep 2
+          done
+          
       - name: Prisma Generate
         run: cd apps/api && npx prisma generate
 
