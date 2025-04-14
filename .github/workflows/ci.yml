@@ -32,12 +32,12 @@ jobs:
         run: docker-compose up -d
         working-directory: ./
 
-      - name: Wait for MySQL to be ready
-        run: |
-          echo "Aguardando MySQL..."
-          until docker exec $(docker ps -qf "name=mymoneymytime") mysqladmin ping -h"localhost" --silent; do
-            sleep 2
-          done
+      # - name: Wait for MySQL to be ready
+      #   run: |
+      #     echo "Aguardando MySQL..."
+      #     until docker exec $(docker ps -qf "name=mymoneymytime") mysqladmin ping -h"localhost" --silent; do
+      #       sleep 2
+      #     done
 
       - name: Generate Prisma client
         run: cd apps/api && npx prisma generate
