@@ -6,8 +6,8 @@ on:
   pull_request:
     branches: [ main ]
 
-env:
-  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+# env:
+#   DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
 jobs:
   main:
@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: 20
 
-      - name: Instalar dependências
+      - name: Install dependencies
         run: npm install
 
       - name: Start services with Docker Compose
@@ -32,9 +32,11 @@ jobs:
           until docker exec $(docker ps -qf "name=mysql") mysqladmin ping -h"localhost" --silent; do
             sleep 2
           done
-          
-      - name: Prisma Generate
+
+      - name: Generate Prisma client
         run: cd apps/api && npx prisma generate
+        env:
+          DATABASE_URL: "mysql://user:password@127.0.0.1:3306/myMoneyMyTime"
 
       # - name: Rodar ESLint
       #   run: npx nx lint api
@@ -45,5 +47,5 @@ jobs:
       # - name: Buildar projeto
       #   run: npx nx build api
 
-      - name: Rodar testes
+      - name: Run tests
         run: npx nx test api
