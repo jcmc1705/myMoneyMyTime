@@ -4,6 +4,7 @@ services:
 
   db:
     image: mysql
+    container_name: mymoneymytime
     restart: always
     ports:
       - 3306:3306
