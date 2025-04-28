@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "api": "nx run api:serve:development",
-    "api-test": "nx test api --watch",
+    "api-test": "nx test api",
     "dev": "npx nx serve front"
   },
   "private": true,

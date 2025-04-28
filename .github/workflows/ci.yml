@@ -8,6 +8,7 @@ on:
 
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  NX_NO_CLOUD: true
 
 jobs:
   main:
