@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 env:
-  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  DATABASE_URL: mysql://user:password@127.0.0.1:3306/myMoneyMyTime
   NX_NO_CLOUD: true
 
 jobs:
@@ -49,9 +49,6 @@ jobs:
 
       # - name: Run Prettier
       #   run: npx prettier --check .
-
-      # - name: Build Api
-      #   run: npx nx build api
 
       - name: Run tests
         run: npx nx test api
