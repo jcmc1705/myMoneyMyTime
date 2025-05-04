@@ -39,9 +39,8 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        # run: npm install && cd apps/api && npm install
 
-      - name: Generate Prisma client
+      - name: Generate prisma schema
         run: cd apps/api && npx prisma db push
 
       # - name: Run ESLint
@@ -50,5 +49,5 @@ jobs:
       # - name: Run Prettier
       #   run: npx prettier --check .
 
-      - name: Run tests
-        run: npx nx test api
+      - name: Run tests with coverage threshold
+        run: npm run api-test-coverage
