@@ -1,11 +1,11 @@
-import './Alert.css'
+import "./Alert.css";
 
 const Alert = () => {
-    return (
-        <div className='container-alert'>
-            <span>Transação cadastrada com sucesso!</span>
-        </div>
-    )
-}
+  return (
+    <div className="container-alert">
+      <span>Transação cadastrada com sucesso!</span>
+    </div>
+  );
+};
 
-export default Alert
+export default Alert;

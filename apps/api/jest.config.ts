@@ -1,25 +1,25 @@
 /* eslint-disable */
-import { readFileSync } from 'fs';
+import { readFileSync } from "fs";
 
 // Reading the SWC compilation config for the spec files
 const swcJestConfig = JSON.parse(
-  readFileSync(`${__dirname}/.spec.swcrc`, 'utf-8')
+  readFileSync(`${__dirname}/.spec.swcrc`, "utf-8"),
 );
 
 // Disable .swcrc look-up by SWC core because we're passing in swcJestConfig ourselves
 swcJestConfig.swcrc = false;
 
 export default {
-  displayName: 'api',
-  preset: '../../jest.preset.js',
-  testEnvironment: 'node',
+  displayName: "api",
+  preset: "../../jest.preset.js",
+  testEnvironment: "node",
   transform: {
-    '^.+\\.[tj]s$': ['@swc/jest', swcJestConfig]
+    "^.+\\.[tj]s$": ["@swc/jest", swcJestConfig],
   },
-  moduleFileExtensions: ['ts', 'js', 'html'],
+  moduleFileExtensions: ["ts", "js", "html"],
   collectCoverage: true,
-  coverageDirectory: '../../coverage/apps/api',
-  coverageReporters: ['text', 'lcov'],
+  coverageDirectory: "../../coverage/apps/api",
+  coverageReporters: ["text", "lcov"],
   coverageThreshold: {
     global: {
       branches: 80,

@@ -1,11 +1,11 @@
-import { PrismaClient } from '@prisma/client';
-import { TransactionRepository } from '../repository/transactionRepositoryService';
-import { InputTransactionTypes } from '../../types/transactionType';
+import { PrismaClient } from "@prisma/client";
+import { TransactionRepository } from "../repository/transactionRepositoryService";
+import { InputTransactionTypes } from "../../types/transactionType";
 
 export class AdapterPrisma implements TransactionRepository {
   prisma: PrismaClient = new PrismaClient();
 
-  async calculateSumByTransactionType(typeTransaction: 'income' | 'expense') {
+  async calculateSumByTransactionType(typeTransaction: "income" | "expense") {
     const result = await this.prisma.transactions.aggregate({
       _sum: {
         value: true,
@@ -15,11 +15,11 @@ export class AdapterPrisma implements TransactionRepository {
       },
     });
     return result._sum.value || 0;
-  };
+  }
 
   async getAllTransactions() {
     return await this.prisma.transactions.findMany();
-  };
+  }
 
   async getTransactionById(transaction_id: number) {
     return await this.prisma.transactions.findUnique({
@@ -35,9 +35,12 @@ export class AdapterPrisma implements TransactionRepository {
         description: input.description,
       },
     });
-  };
+  }
 
-  async updateTransaction(transaction_id: number, input: InputTransactionTypes) {
+  async updateTransaction(
+    transaction_id: number,
+    input: InputTransactionTypes,
+  ) {
     return await this.prisma.transactions.update({
       where: { id: transaction_id },
       data: {
@@ -45,7 +48,7 @@ export class AdapterPrisma implements TransactionRepository {
         value: input.value,
         description: input.description,
       },
-    })
+    });
   }
 
   async deleteTransaction(transaction_id: number) {

@@ -8,4 +8,4 @@ export type CardProps = {
   title: string;
   value: number;
   color: string;
-}
+};

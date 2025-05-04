@@ -43,11 +43,14 @@ jobs:
       - name: Generate prisma schema
         run: cd apps/api && npx prisma db push
 
+      - name: Lint (ESLint + Prettier)
+        run: npx nx run-many --target=lint --all
+
       # - name: Run ESLint
       #   run: npx nx lint api
 
-      # - name: Run Prettier
-      #   run: npx prettier --check .
+      - name: Run Prettier
+        run: npx prettier --check . --write
 
       - name: Run tests with coverage threshold
         run: npm run api-test-coverage

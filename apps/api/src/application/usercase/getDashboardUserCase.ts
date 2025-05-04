@@ -1,11 +1,11 @@
-import { TransactionRepository } from '../../infra/repository/transactionRepositoryService';
+import { TransactionRepository } from "../../infra/repository/transactionRepositoryService";
 
 export class GetDashboardUseCase {
-  constructor(readonly transactionRepository: TransactionRepository) { }
+  constructor(readonly transactionRepository: TransactionRepository) {}
   async execute() {
     const [sumIncomes, sumExpenses] = await Promise.all([
-      this.transactionRepository.calculateSumByTransactionType('income'),
-      this.transactionRepository.calculateSumByTransactionType('expense'),
+      this.transactionRepository.calculateSumByTransactionType("income"),
+      this.transactionRepository.calculateSumByTransactionType("expense"),
     ]);
 
     return {
@@ -15,6 +15,3 @@ export class GetDashboardUseCase {
     };
   }
 }
-
-
-

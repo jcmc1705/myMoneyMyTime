@@ -2,25 +2,24 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { TitleProps } from "../types/title";
 
-import './Title.css'
+import "./Title.css";
 
 const Title = ({ title, returnOption, redirectLink }: TitleProps) => {
+  const navigate = useNavigate();
 
-    const navigate = useNavigate()
+  return (
+    <div className="title">
+      <h1>{title}</h1>
 
-    return (
-        <div className="title">
+      {returnOption ? (
+        <input type="button" value="Voltar" onClick={() => navigate(-1)} />
+      ) : (
+        <Link to={redirectLink}>
+          <input type="button" value="Adicionar" />
+        </Link>
+      )}
+    </div>
+  );
+};
 
-            <h1>{title}</h1>
-
-            {returnOption ? <input type="button" value='Voltar' onClick={() => navigate(-1)} /> :
-                (
-                    <Link to={redirectLink}>
-                        <input type="button" value='Adicionar' />
-                    </Link>
-                )}
-        </div>
-    )
-}
-
-export default Title
+export default Title;

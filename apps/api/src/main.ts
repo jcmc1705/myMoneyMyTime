@@ -8,9 +8,9 @@ import DashboardController from "./infra/controller/Dashboard";
 // Entry Point - Composition Root
 
 const httpServer = new ExpressAdapter();
-const transactionRepository = new AdapterPrisma()
+const transactionRepository = new AdapterPrisma();
 const transactionsUseCase = new TransactionsUseCase(transactionRepository);
-const getDashboardUseCase = new GetDashboardUseCase(transactionRepository)
+const getDashboardUseCase = new GetDashboardUseCase(transactionRepository);
 new TransactionsController(httpServer, transactionsUseCase);
-new DashboardController(httpServer, getDashboardUseCase)
+new DashboardController(httpServer, getDashboardUseCase);
 httpServer.listen(3000);
