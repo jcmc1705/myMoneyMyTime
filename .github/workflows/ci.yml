@@ -7,15 +7,14 @@ on:
     branches: [ main ]
 
 env:
-  DATABASE_URL: mysql://user:password@127.0.0.1:3306/myMoneyMyTime
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
   NX_NO_CLOUD: true
 
 jobs:
   main:
     runs-on: ubuntu-latest
     services:
-      mysql:
-        # todo: use our docker image registry
+      mysql:       
         image: mysql:latest
         env:
           MYSQL_RANDOM_ROOT_PASSWORD: true
