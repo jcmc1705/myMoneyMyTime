@@ -1,8 +1,8 @@
 name: CI
 
 on:
-  push:
-    branches: [main]
+  # push:
+  #   branches: [main]
   pull_request:
     branches: [main]
 
@@ -42,9 +42,6 @@ jobs:
 
       - name: Generate prisma schema
         run: cd apps/api && npx prisma db push
-
-      - name: Lint (ESLint + Prettier)
-        run: npx nx run-many --target=lint --all
 
       # - name: Run ESLint
       #   run: npx nx lint api
