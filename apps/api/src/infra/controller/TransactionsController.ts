@@ -1,8 +1,6 @@
 import { TransactionsUseCase } from "../../application/usercase/transactionsUserCase";
 import HttpServer from "../http/httpServer";
 
-// Interface Adapter
-
 export default class TransactionsController {
   constructor(
     readonly httpServer: HttpServer,

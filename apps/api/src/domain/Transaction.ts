@@ -1,4 +1,3 @@
-// Entity
 export default class Transaction {
   constructor(
     readonly id: number,
@@ -30,7 +29,6 @@ export default class Transaction {
     return Number.isInteger(transaction_id) && transaction_id > 0;
   };
 
-  // Static Factory Method
   static create(
     description: string,
     value: number,

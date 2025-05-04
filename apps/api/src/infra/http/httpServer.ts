@@ -1,8 +1,6 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 
-// Framework and Driver
-
 export default interface HttpServer {
   register(method: string, url: string, callback: Function): void;
   listen(port: number): void;

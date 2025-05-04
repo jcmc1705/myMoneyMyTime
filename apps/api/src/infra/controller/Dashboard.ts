@@ -1,8 +1,6 @@
 import { GetDashboardUseCase } from "../../application/usercase/getDashboardUserCase";
 import HttpServer from "../http/httpServer";
 
-// Interface Adapter
-
 export default class DashboardController {
   constructor(
     readonly httpServer: HttpServer,
