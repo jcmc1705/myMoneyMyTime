@@ -10,5 +10,5 @@ const transactionRepository = new AdapterPrisma();
 const transactionsUseCase = new TransactionsUseCase(transactionRepository);
 const getDashboardUseCase = new GetDashboardUseCase(transactionRepository);
 new TransactionsController(httpServer, transactionsUseCase);
-new DashboardController(httpServer, getDashboardUseCase);
+//new DashboardController(httpServer, getDashboardUseCase);
 httpServer.listen(3000);
