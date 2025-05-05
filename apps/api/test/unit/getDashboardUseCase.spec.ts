@@ -1,9 +1,9 @@
-import { AdapterFakerDB } from "../../src/infra/database/AdapterFakerDB";
+import { FakerTransactionRepository } from "../../src/infra/repository/FakerTransactionRepository";
 import { GetDashboardUseCase } from "../../src/application/usercase/getDashboardUserCase";
 
 describe("getDashboardUseCase", () => {
   it("execute should get data from dashboard", async () => {
-    const getDashboardUseCase = new GetDashboardUseCase(new AdapterFakerDB());
+    const getDashboardUseCase = new GetDashboardUseCase(new FakerTransactionRepository());
     const response = await getDashboardUseCase.execute();
     expect(response).toEqual({
       incomes: "100.00",

@@ -1,4 +1,4 @@
-import { TransactionRepository } from "../../infra/repository/transactionRepositoryService";
+import { TransactionRepository } from "../repository/TransactionRepository";
 import { InputTransactionTypes } from "../../types/transactionType";
 
 export class TransactionsUseCase {

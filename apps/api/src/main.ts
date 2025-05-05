@@ -1,6 +1,6 @@
 import { TransactionsUseCase } from "./application/usercase/transactionsUserCase";
 import { GetDashboardUseCase } from "./application/usercase/getDashboardUserCase";
-import { AdapterPrisma } from "./infra/database/AdapterPrisma";
+import { AdapterPrisma } from "./infra/repository/PrismaTransactionRepository";
 import { ExpressAdapter } from "./infra/http/httpServer";
 import TransactionsController from "./infra/controller/TransactionsController";
 import DashboardController from "./infra/controller/Dashboard";

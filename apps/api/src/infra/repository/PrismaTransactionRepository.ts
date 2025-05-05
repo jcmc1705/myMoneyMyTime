@@ -1,8 +1,8 @@
 import { PrismaClient } from "@prisma/client";
-import { TransactionRepository } from "../repository/transactionRepositoryService";
+import { TransactionRepository } from "../../application/repository/TransactionRepository";
 import { InputTransactionTypes } from "../../types/transactionType";
 
-export class AdapterPrisma implements TransactionRepository {
+export class PrismaTransactionRepository implements TransactionRepository {
   prisma: PrismaClient = new PrismaClient();
 
   async calculateSumByTransactionType(typeTransaction: "income" | "expense") {
