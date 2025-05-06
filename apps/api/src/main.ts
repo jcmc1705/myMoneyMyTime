@@ -1,12 +1,12 @@
 import { TransactionsUseCase } from "./application/usercase/transactionsUserCase";
 import { GetDashboardUseCase } from "./application/usercase/getDashboardUserCase";
-import { AdapterPrisma } from "./infra/repository/PrismaTransactionRepository";
+import { PrismaTransactionRepository } from "./infra/repository/PrismaTransactionRepository";
 import { ExpressAdapter } from "./infra/http/httpServer";
 import TransactionsController from "./infra/controller/TransactionsController";
 import DashboardController from "./infra/controller/Dashboard";
 
 const httpServer = new ExpressAdapter();
-const transactionRepository = new AdapterPrisma();
+const transactionRepository = new PrismaTransactionRepository();
 const transactionsUseCase = new TransactionsUseCase(transactionRepository);
 const getDashboardUseCase = new GetDashboardUseCase(transactionRepository);
 new TransactionsController(httpServer, transactionsUseCase);
