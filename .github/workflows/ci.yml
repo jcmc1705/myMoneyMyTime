@@ -11,7 +11,26 @@ env:
   NX_NO_CLOUD: true
 
 jobs:
-  main:
+
+  staticCheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Using Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      # - name: Run ESLint
+      #   run: npx nx lint api
+
+      - name: Run Prettier
+        run: npx prettier --check .
+
+  test:
     runs-on: ubuntu-latest
     services:
       mysql:
@@ -42,12 +61,6 @@ jobs:
 
       - name: Generate prisma schema
         run: cd apps/api && npx prisma db push
-
-      # - name: Run ESLint
-      #   run: npx nx lint api
-
-      - name: Run Prettier
-        run: npx prettier --check .
 
       - name: Run tests with coverage threshold
         run: npm run api-test-coverage
