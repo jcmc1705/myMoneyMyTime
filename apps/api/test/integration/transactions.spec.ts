@@ -4,7 +4,9 @@ import { InputTransactionTypes } from "../../src/types/transactionType";
 
 describe("Transactions", () => {
   const prismaTransactionRepository = new PrismaTransactionRepository();
-  const transactionsUseCase = new TransactionsUseCase(prismaTransactionRepository);
+  const transactionsUseCase = new TransactionsUseCase(
+    prismaTransactionRepository,
+  );
 
   it("Should save transaction in database", async () => {
     const input: InputTransactionTypes = {
@@ -14,7 +16,8 @@ describe("Transactions", () => {
     };
     const responseCreate = await transactionsUseCase.createTransaction(input);
     const transactionId = responseCreate.data.id;
-    const responseGet = await prismaTransactionRepository.getTransactionById(transactionId);
+    const responseGet =
+      await prismaTransactionRepository.getTransactionById(transactionId);
     expect(responseGet?.description).toEqual(input.description);
     expect(responseGet?.value).toEqual(input.value);
     expect(responseGet?.typeTransaction).toEqual(input.typeTransaction);
@@ -29,7 +32,8 @@ describe("Transactions", () => {
     const responseCreate = await transactionsUseCase.createTransaction(input);
     const transactionId = responseCreate.data.id;
     await transactionsUseCase.updateTransaction(transactionId, input);
-    const responseGet = await prismaTransactionRepository.getTransactionById(transactionId);
+    const responseGet =
+      await prismaTransactionRepository.getTransactionById(transactionId);
     expect(responseGet?.description).toEqual(input.description);
     expect(responseGet?.value).toEqual(input.value);
     expect(responseGet?.typeTransaction).toEqual(input.typeTransaction);
