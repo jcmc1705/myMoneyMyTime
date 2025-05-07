@@ -11,7 +11,6 @@ env:
   NX_NO_CLOUD: true
 
 jobs:
-
   staticCheck:
     runs-on: ubuntu-latest
     steps:

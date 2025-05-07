@@ -6,7 +6,9 @@
     "api": "nx run api:serve:development",
     "api-test": "nx test api",
     "api-test-coverage": "npx nx test api --codeCoverage=true",
-    "dev": "npx nx serve front"
+    "dev": "npx nx serve front",
+    "prettier": "npx prettier --check .",
+    "prettier-fix": "npx prettier --check --write ."
   },
   "private": true,
   "devDependencies": {
