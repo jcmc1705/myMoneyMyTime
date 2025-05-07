@@ -3,7 +3,9 @@ import { GetDashboardUseCase } from "../../src/application/usercase/getDashboard
 
 describe("getDashboardUseCase", () => {
   it("execute should get data from dashboard", async () => {
-    const getDashboardUseCase = new GetDashboardUseCase(new FakerTransactionRepository());
+    const getDashboardUseCase = new GetDashboardUseCase(
+      new FakerTransactionRepository(),
+    );
     const response = await getDashboardUseCase.execute();
     expect(response).toEqual({
       incomes: "100.00",
