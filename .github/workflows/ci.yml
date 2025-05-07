@@ -47,7 +47,7 @@ jobs:
       #   run: npx nx lint api
 
       - name: Run Prettier
-        run: npx prettier --check . --write
+        run: npx prettier --check . 
 
       - name: Run tests with coverage threshold
         run: npm run api-test-coverage
