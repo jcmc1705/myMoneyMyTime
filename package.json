@@ -7,8 +7,8 @@
     "api-test": "nx test api",
     "api-test-coverage": "nx test api --codeCoverage=true",
     "dev": "nx serve front",
-    "prettier": "prettier --check .",
-    "prettier-fix": "prettier --check --write ."
+    "prettier": "npx prettier --check .",
+    "prettier-fix": "npx prettier --check --write ."
   },
   "private": true,
   "devDependencies": {
