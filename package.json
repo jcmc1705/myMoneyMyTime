@@ -39,7 +39,7 @@
     "jest-environment-node": "^29.7.0",
     "jsdom": "~22.1.0",
     "nx": "20.4.6",
-    "prisma": "^6.4.1",
+    "prisma": "^6.8.2",
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
     "tslib": "^2.3.0",
@@ -52,7 +52,9 @@
     "apps/*"
   ],
   "dependencies": {
+    "@prisma/client": "^6.8.2",
     "axios": "^1.8.3",
+    "cors": "^2.8.5",
     "express": "^4.21.2",
     "faker-br": "^0.4.1",
     "react": "19.0.0",
