@@ -1,3 +1,4 @@
+# Etapa de build
 FROM node:18-alpine AS builder
 
 WORKDIR /app
@@ -9,9 +10,9 @@ COPY tsconfig.base.json ./
 COPY apps ./apps
 
 RUN npm install -g nx
-
 RUN npx nx build api
 
+# Etapa final
 FROM node:18-alpine
 
 WORKDIR /app
@@ -19,19 +20,13 @@ WORKDIR /app
 COPY --from=builder /app/apps/api/dist ./apps/api
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/package-lock.json ./package-lock.json
-
-COPY apps/api/prisma ./apps/api/prisma
+COPY --from=builder /app/apps/api/prisma ./apps/api/prisma
 COPY .env ./
-COPY start.sh ./start.sh
 
 RUN npm install --omit=dev
 
-RUN chmod +x ./start.sh
-
-CMD ["./start.sh"]
-
-# RUN npx prisma generate --schema=./apps/api/prisma/schema.prisma
-# RUN npx prisma migrate deploy --schema=./apps/api/prisma/schema.prisma
+RUN npx prisma generate --schema=./apps/api/prisma/schema.prisma
 
 EXPOSE 3000
-# CMD ["node", "apps/api/main.js"]
+
+CMD ["node", "apps/api/main.js"]
