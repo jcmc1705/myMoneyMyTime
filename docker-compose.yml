@@ -1,20 +1,29 @@
-version: "3.1"
-
 services:
   db:
-    image: mysql
-    container_name: mymoneymytime
+    image: mysql:8.0
+    container_name: mmmt-db
     restart: always
-    ports:
-      - 3306:3306
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-      MYSQL_DATABASE: myMoneyMyTime
-
-  adminer:
-    image: adminer
-    restart: always
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     ports:
-      - 8080:8080
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: mmmt-api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    env_file:
+      - .env
+
+volumes:
+  mysql_data:
