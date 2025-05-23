@@ -58,8 +58,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Generate prisma schema
-        run: npx prisma generate --schema=./apps/api/prisma/schema.prisma
+      - name: Push DB schema
+        run: npx prisma db push --schema=./apps/api/prisma/schema.prisma
 
       - name: Run tests with coverage threshold
         run: npm run api-test-coverage
