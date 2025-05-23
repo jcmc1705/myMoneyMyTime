@@ -69,12 +69,5 @@
         }
       }
     }
-  },
-  "dependencies": {
-    "@prisma/client": "^6.4.1",
-    "cors": "^2.8.5"
-  },
-  "devDependencies": {
-    "@types/cors": "^2.8.17"
   }
 }
