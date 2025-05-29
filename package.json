@@ -9,7 +9,8 @@
     "dev": "nx serve front",
     "prettier": "npx prettier --check .",
     "prettier-fix": "npx prettier --check --write .",
-    "seed": "npx prisma db seed --schema=apps/api/prisma/schema.prisma"
+    "seed": "npx prisma db seed --schema=apps/api/prisma/schema.prisma",
+    "docker-build-api": "docker build -t mmmt-api -f Dockerfile.api ."
   },
   "prisma": {
     "seed": "ts-node apps/api/prisma/seed.ts"

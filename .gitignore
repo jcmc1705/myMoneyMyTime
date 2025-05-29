@@ -43,5 +43,6 @@ Thumbs.db
 
 test-output
 .env
+.env.docker
 vite.config.*.timestamp*
 vitest.config.*.timestamp*
