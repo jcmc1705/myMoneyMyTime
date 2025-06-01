@@ -8,7 +8,11 @@
     "api-test-coverage": "nx test api --codeCoverage=true",
     "dev": "nx serve front",
     "prettier": "npx prettier --check .",
-    "prettier-fix": "npx prettier --check --write ."
+    "prettier-fix": "npx prettier --check --write .",
+    "seed": "npx prisma db seed --schema=apps/api/prisma/schema.prisma"
+  },
+  "prisma": {
+    "seed": "ts-node apps/api/prisma/seed.ts"
   },
   "private": true,
   "devDependencies": {

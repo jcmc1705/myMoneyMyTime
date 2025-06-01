@@ -1,89 +1,128 @@
-# MyMoneyMyTime
+# 💰 My Money My Time
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+Projeto monolítico sobre finanças pessoais, construído com **Nx**.  
+Atualmente em desenvolvimento, com foco na gestão de **transações financeiras** e exibição de **dashboard financeiro** com totais de entradas, saídas e saldo.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+---
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/js?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+## 📚 Sumário
 
-## Finish your CI setup
+- [Sobre](#sobre)
+- [Funcionalidades](#funcionalidades)
+- [Tecnologias](#tecnologias)
+- [Instalação](#instalação)
+- [Como usar](#como-usar)
+- [Testes](#testes)
+- [Contribuição](#contribuição)
+- [Licença](#licença)
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/DwPlaeQdW9)
+---
 
-## Generate a library
+## 📖 Sobre
 
-```sh
-npx nx g @nx/js:lib packages/pkg1 --publishable --importPath=@my-org/pkg1
+O **My Money My Time** é um projeto pessoal para controle financeiro, desenvolvido como um monólito utilizando o [Nx](https://nx.dev/) para organização do workspace.  
+A proposta do sistema é permitir que usuários tenham controle total de suas finanças, começando com o gerenciamento de **transações** (entradas e saídas) e com um **dashboard financeiro** com informações resumidas.
+
+---
+
+## ✅ Funcionalidades
+
+Atualmente o projeto possui:
+
+- [x] Criar transações
+- [x] Editar transações
+- [x] Excluir transações
+- [x] Listar transações
+- [x] Dashboard com total de entradas, saídas e saldo
+
+---
+
+## 🧰 Tecnologias
+
+Tecnologias e ferramentas utilizadas:
+
+- [Node.js](https://nodejs.org/)
+- [Express](https://expressjs.com/)
+- [React](https://reactjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [MySQL](https://www.mysql.com/)
+- [Prisma ORM](https://www.prisma.io/)
+- [Nx Monorepo](https://nx.dev/)
+- [Jest](https://jestjs.io/) (Testes unitários e de integração)
+- [Prettier](https://prettier.io/) (Análise estática de código)
+
+---
+
+## 🛠️ Instalação
+
+### 🧱 Instalação (ambiente local)
+
+> Pré-requisitos: Node.js, MySQL, Docker e npm/yarn instalados
+
+```bash
+# Clone o repositório
+git clone https://github.com/jcmc1705/myMoneyMyTime.git
+
+# Acesse a pasta do projeto
+cd myMoneyMyTime
+
+# Suba os containers
+docker-compose up
+
+# Instale as dependências
+npm install
+
+# Configure o banco de dados e variáveis de ambiente
+cp .env.example .env
+# Edite o arquivo .env com suas configurações do MySQL
+
+# Gere os arquivos do Prisma
+cd apps/api
+npx prisma generate
+npx prisma migrate dev
+
+# Rode o projeto (tanto backend quanto frontend com Nx)
+npx nx run-many --target=serve --all
 ```
 
-## Run tasks
+---
 
-To build the library use:
+## ▶️ Como usar
 
-```sh
-npx nx build pkg1
+Após a aplicação estar rodando:
+
+- Acesse o frontend em `http://localhost:4200`
+- A API estará disponível em `http://localhost:3000/api`
+
+**Rotas de API disponíveis**:
+
+```http
+GET    /api/dashboard          -> Lista dashboard
+GET    /api/transactions       -> Lista transações
+GET    /api/transactions/:id   -> Lista transação
+POST   /api/transactions       -> Cria nova transação
+PUT    /api/transactions/:id   -> Atualiza transação
+DELETE /api/transactions/:id   -> Remove transação
 ```
 
-To run any task with Nx use:
+---
 
-```sh
-npx nx <target> <project-name>
-```
+## 🧪 Testes
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+```bash
+# Executar testes unitários e de integração
+npx nx test api
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+# Verificar formatação e estilo de código com Prettier
+npx prettier --check .
 
-## Versioning and releasing
+---
 
-To version and release the library use
+## 📩 Contato
 
-```
-npx nx release
-```
+Leonardo Victor - leonardovff@gmail.com
+Julio Calheiros – julio.calheiros17@gmail.com - [LinkedIn](https://www.linkedin.com/in/julio-calheiros-125850235)
 
-Pass `--dry-run` to see what would happen without actually releasing the library.
+---
 
-[Learn more about Nx release &raquo;](hhttps://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Keep TypeScript project references up to date
-
-Nx automatically updates TypeScript [project references](https://www.typescriptlang.org/docs/handbook/project-references.html) in `tsconfig.json` files to ensure they remain accurate based on your project dependencies (`import` or `require` statements). This sync is automatically done when running tasks such as `build` or `typecheck`, which require updated references to function correctly.
-
-To manually trigger the process to sync the project graph dependencies information to the TypeScript project references, run the following command:
-
-```sh
-npx nx sync
-```
-
-You can enforce that the TypeScript project references are always in the correct state when running in CI by adding a step to your CI job configuration that runs the following command:
-
-```sh
-npx nx sync:check
-```
-
-[Learn more about nx sync](https://nx.dev/reference/nx-commands#sync)
-
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/nx-api/js?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+> Projeto em constante evolução 🚀

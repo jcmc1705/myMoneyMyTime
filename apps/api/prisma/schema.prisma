@@ -8,6 +8,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+generator tsnode {
+  provider = "ts-node"
+}
+
 model Transactions {
   id             Int          @id @default(autoincrement())
   typeTransaction TypeTransaction
