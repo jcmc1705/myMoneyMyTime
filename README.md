@@ -13,8 +13,6 @@ Atualmente em desenvolvimento, com foco na gestão de **transações financeiras
 - [Instalação](#instalação)
 - [Como usar](#como-usar)
 - [Testes](#testes)
-- [Contribuição](#contribuição)
-- [Licença](#licença)
 
 ---
 
@@ -54,8 +52,6 @@ Tecnologias e ferramentas utilizadas:
 ---
 
 ## 🛠️ Instalação
-
-### 🧱 Instalação (ambiente local)
 
 > Pré-requisitos: Node.js, MySQL, Docker e npm/yarn instalados
 
