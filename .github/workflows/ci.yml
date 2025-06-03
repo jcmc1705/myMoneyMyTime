@@ -7,7 +7,6 @@ on:
     branches: [main]
 
 env:
-  DATABASE_URL: ${{ secrets.DATABASE_URL }}
   NX_NO_CLOUD: true
 
 jobs:
@@ -15,51 +14,95 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Using Node.js
-        uses: actions/setup-node@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 20
 
       - name: Install dependencies
         run: npm install
-
-      # - name: Run ESLint
-      #   run: npx nx lint api
 
       - name: Run Prettier
         run: npx prettier --check .
 
-  test:
+  tests:
     runs-on: ubuntu-latest
+
     services:
       mysql:
         image: mysql:latest
         env:
-          MYSQL_RANDOM_ROOT_PASSWORD: true
-          MYSQL_DATABASE: myMoneyMyTime
-          MYSQL_USER: user
-          MYSQL_PASSWORD: password
+          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+          MYSQL_USER: ${{ secrets.MYSQL_USER }}
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
         ports:
           - 3306:3306
         options: >-
-          --health-cmd "mysqladmin ping -h localhost --user=user --password=password"
-          --health-interval 30s
-          --health-timeout 10s
-          --health-retries 5
+          --health-cmd "mysqladmin ping -h 127.0.0.1 --user=${{ secrets.MYSQL_USER }} --password=${{ secrets.MYSQL_PASSWORD }}"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
           --health-start-period 30s
+
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
     steps:
       - uses: actions/checkout@v3
-      - name: Using Node.js
-        uses: actions/setup-node@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 20
 
       - name: Install dependencies
         run: npm install
 
-      - name: Generate prisma schema
-        run: cd apps/api && npx prisma db push
+      - name: Push Prisma schema to test DB
+        run: npx prisma db push
+        working-directory: apps/api
 
-      - name: Run tests with coverage threshold
+      - name: Run API tests with coverage
         run: npm run api-test-coverage
+
+  deploy:
+    needs: [staticCheck, tests]
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Auth no GCP com OIDC
+        uses: google-github-actions/auth@v2
+        with:
+          token_format: access_token
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
+
+      - name: Setup gcloud CLI
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Build Docker image
+        run: |
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.CLOUD_RUN_SERVICE }}:latest .
+
+      - name: Auth Docker com GCP
+        run: gcloud auth configure-docker
+
+      - name: Push Docker image
+        run: |
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.CLOUD_RUN_SERVICE }}:latest
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy ${{ secrets.CLOUD_RUN_SERVICE }} \
+            --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.CLOUD_RUN_SERVICE }}:latest \
+            --project=${{ secrets.GCP_PROJECT_ID }} \
+            --region=${{ secrets.GCP_REGION }} \
+            --platform=managed \
+            --allow-unauthenticated
