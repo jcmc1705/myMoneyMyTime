@@ -34,7 +34,7 @@ jobs:
       MYSQL_USER: ${{ secrets.MYSQL_USER }}
       MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
       MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
-      MYSQL_ALLOW_EMPTY_PASSWORD: ${{ secrets.MYSQL_ALLOW_EMPTY_PASSWORD }} "yes"
+      MYSQL_ALLOW_EMPTY_PASSWORD: ${{ secrets.MYSQL_ALLOW_EMPTY_PASSWORD }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
     services:
@@ -45,12 +45,11 @@ jobs:
           MYSQL_USER: $MYSQL_USER
           MYSQL_PASSWORD: $MYSQL_PASSWORD
           MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
-          MYSQL_ALLOW_EMPTY_PASSWORD: $MYSQL_ALLOW_EMPTY_PASSWORD
 
         ports:
           - 3306:3306
         options: >-
-          --health-cmd "mysqladmin ping -h 127.0.0.1 --user=$MYSQL_USER --password=$MYSQL_PASSWORD"
+          --health-cmd "mysqladmin ping -h localhost --user=$MYSQL_USER --password=$MYSQL_PASSWORD"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 10
