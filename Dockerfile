@@ -17,7 +17,7 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-COPY startup.sh .
+COPY apps/api/startup.sh ./startup.sh
 RUN chmod +x startup.sh
 
 COPY --from=builder /app/apps/api/dist ./apps/api/dist
