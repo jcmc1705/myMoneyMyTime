@@ -30,26 +30,23 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
-      MYSQL_USER: ${{ secrets.MYSQL_USER }}
-      MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      NX_NO_CLOUD: true
 
     services:
       mysql:
         image: mysql:8.0
         env:
-          MYSQL_RANDOM_ROOT_PASSWORD: true
-          MYSQL_DATABASE: $MYSQL_DATABASE
-          MYSQL_USER: $MYSQL_USER
-          MYSQL_PASSWORD: $MYSQL_PASSWORD
-
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: myMoneyMyTime
+          MYSQL_USER: user
+          MYSQL_PASSWORD: password
         ports:
           - 3306:3306
         options: >-
-          --health-cmd "mysqladmin ping -h localhost --user=$MYSQL_USER --password=$MYSQL_PASSWORD"
-          --health-interval 30s
-          --health-timeout 10s
+          --health-cmd "mysqladmin ping -h 127.0.0.1 --user=user --password=password"
+          --health-interval 10s
+          --health-timeout 5s
           --health-retries 5
           --health-start-period 30s
 
@@ -63,6 +60,14 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+
+      - name: Wait for MySQL to be ready
+        run: |
+          for i in {1..30}; do
+            nc -z 127.0.0.1 3306 && echo "MySQL está pronto!" && break
+            echo "Aguardando MySQL..."
+            sleep 2
+          done
 
       - name: Push Prisma schema to test DB
         run: cd apps/api && npx prisma db push
