@@ -7,6 +7,7 @@ on:
     branches: [main]
 
 env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
   NX_NO_CLOUD: true
 
 jobs:
@@ -14,9 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Using Node.js
+        uses: actions/setup-node@v2
         with:
           node-version: 20
 
@@ -28,26 +28,18 @@ jobs:
 
   tests:
     runs-on: ubuntu-latest
-
-    env:
-      MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
-      MYSQL_USER: ${{ secrets.MYSQL_USER }}
-      MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
-
     services:
       mysql:
-        image: mysql:8.0
+        image: mysql:latest
         env:
           MYSQL_RANDOM_ROOT_PASSWORD: true
-          MYSQL_DATABASE: $MYSQL_DATABASE
-          MYSQL_USER: $MYSQL_USER
-          MYSQL_PASSWORD: $MYSQL_PASSWORD
-
+          MYSQL_DATABASE: myMoneyMyTime
+          MYSQL_USER: user
+          MYSQL_PASSWORD: password
         ports:
           - 3306:3306
         options: >-
-          --health-cmd "mysqladmin ping -h localhost --user=$MYSQL_USER --password=$MYSQL_PASSWORD"
+          --health-cmd "mysqladmin ping -h localhost --user=user --password=password"
           --health-interval 30s
           --health-timeout 10s
           --health-retries 5
@@ -55,20 +47,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Using Node.js
+        uses: actions/setup-node@v2
         with:
           node-version: 20
 
       - name: Install dependencies
         run: npm install
 
-      - name: Push Prisma schema to test DB
-        run: npx prisma db push
-        working-directory: apps/api
+      - name: Generate prisma schema
+        run: cd apps/api && npx prisma db push
 
-      - name: Run API tests with coverage
+      - name: Run tests with coverage threshold
         run: npm run api-test-coverage
 
   deploy:
