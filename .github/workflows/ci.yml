@@ -65,8 +65,7 @@ jobs:
         run: npm install
 
       - name: Push Prisma schema to test DB
-        run: npx prisma db push
-        working-directory: apps/api
+        run: cd apps/api && npx prisma db push
 
       - name: Run API tests with coverage
         run: npm run api-test-coverage
