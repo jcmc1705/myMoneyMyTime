@@ -86,7 +86,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Auth no GCP com OIDC
+      - name: Auth GCP with OIDC
         uses: google-github-actions/auth@v2
         with:
           token_format: access_token
@@ -96,16 +96,16 @@ jobs:
       - name: Setup gcloud CLI
         uses: google-github-actions/setup-gcloud@v2
 
+      - name: Auth Docker with GCP
+        run: gcloud auth configure-docker ${{secrets.GCP_REGION}}-docker.pkg.dev --quiet
+
       - name: Build Docker image
         run: |
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.CLOUD_RUN_SERVICE }}:latest .
-
-      - name: Auth Docker com GCP
-        run: gcloud auth configure-docker --quiet
+          docker build -t ${{secrets.GCP_REGION}}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{secrets.GCP_REPO}}/${{ secrets.CLOUD_RUN_SERVICE }}:latest .
 
       - name: Push Docker image
         run: |
-          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.CLOUD_RUN_SERVICE }}:latest
+          docker push ${{secrets.GCP_REGION}}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{secrets.GCP_REPO}}/${{ secrets.CLOUD_RUN_SERVICE }}:latest
 
       - name: Deploy to Cloud Run
         run: |
