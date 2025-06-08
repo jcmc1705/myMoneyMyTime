@@ -47,7 +47,7 @@ fi
 # Check the exit status of the Prisma migration
 if [ $? -eq 0 ]; then
   # If the migration succeeded, run the start command
-  node apps/api/main.js
+  node apps/api/dist/main.js
 else
   # If the migration failed, print an error message
   echo "Prisma migration failed. Aborting npm run start."
