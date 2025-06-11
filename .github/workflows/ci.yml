@@ -114,5 +114,6 @@ jobs:
             --project=${{ secrets.GCP_PROJECT_ID }} \
             --region=${{ secrets.GCP_REGION }} \
             --platform=managed \
+            --set-env-vars PORT=8080 \
             --allow-unauthenticated \
             --quiet
