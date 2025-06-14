@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      DATABASE_URL: "mysql://user:password@localhost:3306/myMoneyMyTime"
       NX_NO_CLOUD: true
 
     services:
