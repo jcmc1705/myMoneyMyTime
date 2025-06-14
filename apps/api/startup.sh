@@ -41,7 +41,7 @@ if [[ ! -z "$K_JOB" ]]; then
     echo "Running on Cloud Run Job - Migrations skipped"
 else
     echo "Running on Cloud Run Service: $K_SERVICE"
-    npx prisma migrate deploy
+    npx prisma migrate deploy --schema=./apps/api/prisma/schema.prisma
 fi
 
 # Check the exit status of the Prisma migration
