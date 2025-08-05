@@ -1,14 +1,26 @@
-import { TransactionsUseCase } from "./application/usercase/transactionsUserCase";
-import { GetDashboardUseCase } from "./application/usercase/getDashboardUserCase";
-import { PrismaTransactionRepository } from "./infra/repository/PrismaTransactionRepository";
 import { ExpressAdapter } from "./infra/http/httpServer";
-import TransactionsController from "./infra/controller/TransactionsController";
+import { PrismaTransactionRepository } from "./infra/repository/PrismaTransactionRepository";
 import DashboardController from "./infra/controller/Dashboard";
+import GetDashboardUsecase from "./application/usercase/GetDashboardUsecase";
+import TransactionsController from "./infra/controller/TransactionsController";
+import CreateTransactionUsecase from "./application/usercase/CreateTransactionUsecase";
+import GetAllTransactionsUsecase from "./application/usercase/GetAllTransactionsUsecase";
+import GetTransactionUsecase from "./application/usercase/GetTransactionUsecase";
+import UpdateTransactionUsecase from "./application/usercase/UpdateTransactionUsecase";
+import DeleteTransactionUsecase from "./application/usercase/DeleteTransactionUsecase";
 
 const httpServer = new ExpressAdapter();
 const transactionRepository = new PrismaTransactionRepository();
-const transactionsUseCase = new TransactionsUseCase(transactionRepository);
-const getDashboardUseCase = new GetDashboardUseCase(transactionRepository);
-new TransactionsController(httpServer, transactionsUseCase);
-new DashboardController(httpServer, getDashboardUseCase);
-httpServer.listen(Number(process.env.PORT) || 3000);
+new DashboardController(
+  httpServer,
+  new GetDashboardUsecase(transactionRepository),
+);
+new TransactionsController(
+  httpServer,
+  new CreateTransactionUsecase(transactionRepository),
+  new GetAllTransactionsUsecase(transactionRepository),
+  new GetTransactionUsecase(transactionRepository),
+  new UpdateTransactionUsecase(transactionRepository),
+  new DeleteTransactionUsecase(transactionRepository),
+);
+httpServer.listen(Number(process.env.PORT) || 3000, "localhost");

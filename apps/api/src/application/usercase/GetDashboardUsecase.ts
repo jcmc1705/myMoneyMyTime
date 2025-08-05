@@ -1,6 +1,6 @@
-import { TransactionRepository } from "../repository/TransactionRepository";
+import TransactionRepository from "../repository/TransactionRepository";
 
-export class GetDashboardUseCase {
+export default class GetDashboardUsecase {
   constructor(readonly transactionRepository: TransactionRepository) {}
   async execute() {
     const [sumIncomes, sumExpenses] = await Promise.all([

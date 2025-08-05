@@ -3,7 +3,7 @@ import cors from "cors";
 
 export default interface HttpServer {
   register(method: string, url: string, callback: Function): void;
-  listen(port: number): void;
+  listen(port: number, host: string): void;
 }
 
 export class ExpressAdapter implements HttpServer {
@@ -26,8 +26,8 @@ export class ExpressAdapter implements HttpServer {
     });
   }
 
-  listen(port: number): void {
-    this.app.listen(port, "0.0.0.0");
+  listen(port: number, host: string): void {
+    this.app.listen(port, host);
     console.log(`Servidor rodando na porta ${port}`);
   }
 }

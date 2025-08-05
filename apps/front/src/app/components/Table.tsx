@@ -7,7 +7,7 @@ interface DataItem {
   id: number;
   value: number;
   description: string;
-  typeTransaction: string;
+  transactionType: string;
   dateTime: string;
 }
 
@@ -30,7 +30,7 @@ const Table = ({ data }: Props) => {
   const deleteTransaction = async (id: number) => {
     try {
       setIsLoading(true);
-      await fetch(`http://127.0.0.1:3000/api/transactions/${id}`, {
+      await fetch(`http://localhost:3000/api/transactions/${id}`, {
         method: "DELETE",
       });
       setIsLoading(false);
@@ -47,10 +47,10 @@ const Table = ({ data }: Props) => {
         <th>Valor</th>
         <th>Ações</th>
       </tr>
-      {transactions.map(({ id, description, typeTransaction, value }) => (
+      {transactions.map(({ id, description, transactionType, value }) => (
         <tr key={id} className="transaction-control">
           <td>{description}</td>
-          <td className={typeTransaction}>R$ {value.toFixed(2)}</td>
+          <td className={transactionType}>R$ {value.toFixed(2)}</td>
           <td className="btn">
             <Link to={`/transactions/edit/${id}`}>
               <button>Editar</button>

@@ -1,7 +1,7 @@
 export type TransactionProps = {
   value: number | "";
   description: string;
-  typeTransaction: "income" | "expense";
+  transactionType: "income" | "expense";
 };
 
 export type FormTransactionProps = {

@@ -1,59 +1,56 @@
 import { PrismaClient } from "@prisma/client";
-import { TransactionRepository } from "../../application/repository/TransactionRepository";
-import { InputTransactionTypes } from "../../types/transactionType";
+import TransactionRepository from "../../application/repository/TransactionRepository";
+import Transaction from "../../domain/entidy/Transaction";
 
 export class PrismaTransactionRepository implements TransactionRepository {
   prisma: PrismaClient = new PrismaClient();
 
-  async calculateSumByTransactionType(typeTransaction: "income" | "expense") {
-    const result = await this.prisma.transactions.aggregate({
+  async calculateSumByTransactionType(transactionType: "income" | "expense") {
+    const result = await this.prisma.transaction.aggregate({
       _sum: {
         value: true,
       },
       where: {
-        typeTransaction,
+        transactionType,
       },
     });
     return result._sum.value || 0;
   }
 
   async getAllTransactions() {
-    return await this.prisma.transactions.findMany();
+    return await this.prisma.transaction.findMany();
   }
 
-  async getTransactionById(transaction_id: number) {
-    return await this.prisma.transactions.findUnique({
-      where: { id: transaction_id },
+  async getTransactionById(transactionId: number) {
+    return await this.prisma.transaction.findUnique({
+      where: { id: transactionId },
     });
   }
 
-  async createTransaction(input: InputTransactionTypes) {
-    return await this.prisma.transactions.create({
+  async createTransaction(input: Transaction) {
+    return await this.prisma.transaction.create({
       data: {
-        typeTransaction: input.typeTransaction,
-        value: Number(input.value),
-        description: input.description,
+        description: input.getDescription(),
+        value: input.getValue(),
+        transactionType: input.getTransactionType(),
       },
     });
   }
 
-  async updateTransaction(
-    transaction_id: number,
-    input: InputTransactionTypes,
-  ) {
-    return await this.prisma.transactions.update({
-      where: { id: transaction_id },
+  async updateTransaction(transactionId: number, input: Transaction) {
+    return await this.prisma.transaction.update({
+      where: { id: transactionId },
       data: {
-        typeTransaction: input.typeTransaction,
-        value: input.value,
-        description: input.description,
+        transactionType: input.getTransactionType(),
+        value: input.getValue(),
+        description: input.getDescription(),
       },
     });
   }
 
-  async deleteTransaction(transaction_id: number) {
-    return await this.prisma.transactions.delete({
-      where: { id: transaction_id },
+  async deleteTransaction(transactionId: number) {
+    return await this.prisma.transaction.delete({
+      where: { id: transactionId },
     });
   }
 }

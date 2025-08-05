@@ -1,12 +1,11 @@
 import { FakerTransactionRepository } from "../../src/infra/repository/FakerTransactionRepository";
-import { GetDashboardUseCase } from "../../src/application/usercase/getDashboardUserCase";
+import GetDashboardUsecase from "../../src/application/usercase/GetDashboardUsecase";
 
-describe("getDashboardUseCase", () => {
-  it("execute should get data from dashboard", async () => {
-    const getDashboardUseCase = new GetDashboardUseCase(
-      new FakerTransactionRepository(),
-    );
-    const response = await getDashboardUseCase.execute();
+describe("GetDashboard", () => {
+  it("Should get data from dashboard", async () => {
+    const transactionRepository = new FakerTransactionRepository();
+    const getDashboardUsecase = new GetDashboardUsecase(transactionRepository);
+    const response = await getDashboardUsecase.execute();
     expect(response).toEqual({
       incomes: "100.00",
       expenses: "15.00",

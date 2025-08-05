@@ -3,17 +3,18 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.transactions.createMany({
+  await prisma.transaction.deleteMany();
+  await prisma.transaction.createMany({
     data: [
-      { description: "Salário", value: 1500, typeTransaction: "income" },
-      { description: "Extra", value: 500, typeTransaction: "income" },
+      { description: "Salário", value: 1500, transactionType: "income" },
+      { description: "Extra", value: 500, transactionType: "income" },
       {
         description: "Aluguel da casa",
         value: 800,
-        typeTransaction: "expense",
+        transactionType: "expense",
       },
-      { description: "Conta de luz", value: 150, typeTransaction: "expense" },
-      { description: "Alimentação", value: 1000, typeTransaction: "expense" },
+      { description: "Conta de luz", value: 150, transactionType: "expense" },
+      { description: "Alimentação", value: 1000, transactionType: "expense" },
     ],
   });
 

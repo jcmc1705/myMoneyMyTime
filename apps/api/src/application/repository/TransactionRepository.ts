@@ -1,18 +1,23 @@
-import {
-  InputTransactionTypes,
-  TransactionType,
-} from "../../types/transactionType";
+import Transaction from "../../domain/entidy/Transaction";
 
-export interface TransactionRepository {
+export default interface TransactionRepository {
   calculateSumByTransactionType(
-    typeTransaction: "income" | "expense",
+    transactionType: "income" | "expense",
   ): Promise<number>;
-  getAllTransactions(): Promise<TransactionType[]>;
-  getTransactionById(transaction_id: number): Promise<TransactionType | null>;
-  createTransaction(input: InputTransactionTypes): Promise<TransactionType>;
+  getAllTransactions(): Promise<TransactionOutput[]>;
+  getTransactionById(transactionId: number): Promise<TransactionOutput | null>;
+  createTransaction(input: Transaction): Promise<TransactionOutput>;
   updateTransaction(
-    transaction_id: number,
-    input: InputTransactionTypes,
-  ): Promise<TransactionType>;
-  deleteTransaction(transaction_id: number): void;
+    transactionId: number,
+    input: Transaction,
+  ): Promise<TransactionOutput>;
+  deleteTransaction(transactionId: number): Promise<TransactionOutput>;
 }
+
+export type TransactionOutput = {
+  id: number;
+  description: string;
+  value: number;
+  transactionType: "income" | "expense";
+  dateTime: Date;
+};
