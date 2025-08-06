@@ -1,5 +1,5 @@
 import { FakerTransactionRepository } from "../../src/infra/repository/FakerTransactionRepository";
-import GetDashboardUsecase from "../../src/application/usercase/GetDashboardUsecase";
+import GetDashboardUsecase from "../../src/application/usecase/GetDashboardUsecase";
 
 describe("GetDashboard", () => {
   it("Should get data from dashboard", async () => {

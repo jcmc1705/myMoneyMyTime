@@ -1,9 +1,9 @@
 import HttpServer from "../http/httpServer";
-import CreateItemUsecase from "../../application/usercase/CreateTransactionUsecase";
-import GetAllItemsUsecase from "../../application/usercase/GetAllTransactionsUsecase";
-import GetTransactionUsecase from "../../application/usercase/GetTransactionUsecase";
-import UpdateItemUsecase from "../../application/usercase/UpdateTransactionUsecase";
-import DeleteItemUsecase from "../../application/usercase/DeleteTransactionUsecase";
+import CreateItemUsecase from "../../application/usecase/CreateTransactionUsecase";
+import GetAllItemsUsecase from "../../application/usecase/GetAllTransactionsUsecase";
+import GetTransactionUsecase from "../../application/usecase/GetTransactionUsecase";
+import UpdateItemUsecase from "../../application/usecase/UpdateTransactionUsecase";
+import DeleteItemUsecase from "../../application/usecase/DeleteTransactionUsecase";
 
 export default class TransactionsController {
   constructor(

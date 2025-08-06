@@ -1,4 +1,4 @@
-import GetDashboardUsecase from "../../application/usercase/GetDashboardUsecase";
+import GetDashboardUsecase from "../../application/usecase/GetDashboardUsecase";
 import HttpServer from "../http/httpServer";
 
 export default class DashboardController {

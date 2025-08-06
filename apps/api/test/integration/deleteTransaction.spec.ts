@@ -1,6 +1,6 @@
 import { PrismaTransactionRepository } from "../../src/infra/repository/PrismaTransactionRepository";
-import CreateTransactionUsecase from "../../src/application/usercase/CreateTransactionUsecase";
-import DeleteTransactionUsecase from "../../src/application/usercase/DeleteTransactionUsecase";
+import CreateTransactionUsecase from "../../src/application/usecase/CreateTransactionUsecase";
+import DeleteTransactionUsecase from "../../src/application/usecase/DeleteTransactionUsecase";
 
 describe("DeleteTransaction", () => {
   const transactionRepository = new PrismaTransactionRepository();

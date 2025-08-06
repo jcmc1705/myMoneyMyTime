@@ -1,5 +1,5 @@
 import { FakerTransactionRepository } from "../../src/infra/repository/FakerTransactionRepository";
-import GetAllTransactionsUsecase from "../../src/application/usercase/GetAllTransactionsUsecase";
+import GetAllTransactionsUsecase from "../../src/application/usecase/GetAllTransactionsUsecase";
 
 describe("GetAllTransactions", () => {
   const transactionRepository = new FakerTransactionRepository();

@@ -1,13 +1,13 @@
 import { ExpressAdapter } from "./infra/http/httpServer";
 import { PrismaTransactionRepository } from "./infra/repository/PrismaTransactionRepository";
 import DashboardController from "./infra/controller/Dashboard";
-import GetDashboardUsecase from "./application/usercase/GetDashboardUsecase";
+import GetDashboardUsecase from "./application/usecase/GetDashboardUsecase";
 import TransactionsController from "./infra/controller/TransactionsController";
-import CreateTransactionUsecase from "./application/usercase/CreateTransactionUsecase";
-import GetAllTransactionsUsecase from "./application/usercase/GetAllTransactionsUsecase";
-import GetTransactionUsecase from "./application/usercase/GetTransactionUsecase";
-import UpdateTransactionUsecase from "./application/usercase/UpdateTransactionUsecase";
-import DeleteTransactionUsecase from "./application/usercase/DeleteTransactionUsecase";
+import GetAllTransactionsUsecase from "./application/usecase/GetAllTransactionsUsecase";
+import GetTransactionUsecase from "./application/usecase/GetTransactionUsecase";
+import CreateTransactionUsecase from "./application/usecase/CreateTransactionUsecase";
+import UpdateTransactionUsecase from "./application/usecase/UpdateTransactionUsecase";
+import DeleteTransactionUsecase from "./application/usecase/DeleteTransactionUsecase";
 
 const httpServer = new ExpressAdapter();
 const transactionRepository = new PrismaTransactionRepository();
