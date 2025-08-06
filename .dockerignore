@@ -1,0 +1,34 @@
+# Ignorar node_modules pois serão instalados dentro do container
+node_modules
+**/node_modules
+
+# Ignorar arquivos de logs
+*.log
+
+# Ignorar pastas de build locais
+dist
+build
+out
+
+# Ignorar pastas do Nx que não são necessárias na imagem final
+tmp
+.nx
+
+# Ignorar arquivos de configuração local e caches
+.vscode
+.idea
+*.env
+.env.local
+.env.*.local
+
+# Ignorar arquivos de teste
+tests
+__tests__
+
+# Ignorar arquivos de sistema do SO
+.DS_Store
+Thumbs.db
+
+# Ignorar arquivos e pastas do git
+.git
+.gitignore
