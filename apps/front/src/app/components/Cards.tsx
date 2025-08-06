@@ -4,11 +4,8 @@ import Card from "./Card";
 
 const Cards = ({ incomes, expenses, balance }: CardsProps) => {
   const balanceColor = (balance: number) => {
-    const balanceToString = balance.toString();
-    const splitBalance = balanceToString.split("");
-    const isNegative = splitBalance[0] === "-";
-    if (isNegative) return "red";
-    return "green";
+    const [firstString] = [...balance.toString()]
+    return firstString === "-" ? "red" : "green";
   };
 
   return (
