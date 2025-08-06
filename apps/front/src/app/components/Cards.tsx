@@ -4,7 +4,7 @@ import Card from "./Card";
 
 const Cards = ({ incomes, expenses, balance }: CardsProps) => {
   const balanceColor = (balance: number) => {
-    const [firstString] = [...balance.toString()]
+    const [firstString] = [...balance.toString()];
     return firstString === "-" ? "red" : "green";
   };
 
