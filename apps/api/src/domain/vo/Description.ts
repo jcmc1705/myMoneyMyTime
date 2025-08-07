@@ -1,15 +1,17 @@
 export default class Description {
   private value: string;
   constructor(description: string) {
-    if (!this.isValid(description))
-      throw new Error("Descrição deve possuir entre 3 e 50 caracteres!");
+    const minCharacters = 3;
+    const maxCharacters = 50;
+    if (!this.isValid(description, minCharacters, maxCharacters))
+      throw new Error(`Descrição deve possuir entre ${minCharacters} e ${maxCharacters} caracteres!`);
     this.value = description;
   }
-  private isValid = (description: string) => {
+  private isValid = (description: string, minCharacters: number, maxCharacters: number) => {
     return (
       description !== null &&
-      description.length >= 3 &&
-      description.length <= 50
+      description.length >= minCharacters &&
+      description.length <= maxCharacters
     );
   };
   getValue() {
