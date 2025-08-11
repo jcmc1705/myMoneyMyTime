@@ -3,8 +3,8 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.transaction.deleteMany();
-  await prisma.transaction.createMany({
+  await prisma.transactions.deleteMany();
+  await prisma.transactions.createMany({
     data: [
       { description: "Salário", value: 1500, transactionType: "income" },
       { description: "Extra", value: 500, transactionType: "income" },

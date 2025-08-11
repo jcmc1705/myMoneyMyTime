@@ -1,80 +1,14 @@
-name: CI
+name: CD
 
 on:
-  pull_request:
+  push:
     branches: [main]
 
 env:
   NX_NO_CLOUD: true
 
 jobs:
-  staticCheck:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run Prettier
-        run: npx prettier --check .
-
-  tests:
-    runs-on: ubuntu-latest
-
-    env:
-      DATABASE_URL: "mysql://user:password@localhost:3306/myMoneyMyTime"
-      NX_NO_CLOUD: true
-
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: myMoneyMyTime
-          MYSQL_USER: user
-          MYSQL_PASSWORD: password
-        ports:
-          - 3306:3306
-        options: >-
-          --health-cmd "mysqladmin ping -h 127.0.0.1 --user=user --password=password"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-          --health-start-period 30s
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Wait for MySQL to be ready
-        run: |
-          for i in {1..30}; do
-            nc -z 127.0.0.1 3306 && echo "MySQL está pronto!" && break
-            echo "Aguardando MySQL..."
-            sleep 2
-          done
-
-      - name: Push Prisma schema to test DB
-        run: cd apps/api && npx prisma db push
-
-      - name: Run API tests with coverage
-        run: npm run api-test-coverage
-
   deploy:
-    needs: [staticCheck, tests]
     runs-on: ubuntu-latest
 
     permissions:
