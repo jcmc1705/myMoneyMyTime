@@ -8,15 +8,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Transactions {
-  id             Int          @id @default(autoincrement())
-  typeTransaction TypeTransaction
-  value          Float
-  dateTime       DateTime      @default(now())
-  description    String        @db.VarChar(150)
+model Transaction {
+  id              Int             @id @default(autoincrement())
+  transactionType TransactionType
+  value           Float
+  dateTime        DateTime        @default(now())
+  description     String          @db.VarChar(150)
 }
 
-enum TypeTransaction {
+enum TransactionType {
   expense
   income
 }

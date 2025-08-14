@@ -1,23 +1,21 @@
 .form-transaction {
-  margin-top: 2.5rem;
+  margin-top: 3rem;
 }
 
 .form-transaction form {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  max-width: 500px;
+  max-width: 300px;
   margin: 0 auto;
 }
 
 label {
   font-weight: bold;
-  margin-bottom: 5px;
 }
 
 .form-transaction input,
-select {
-  width: 100%;
+.form-transaction select {
   padding: 10px;
   border: 1px solid #2b3566;
   background-color: #0e1129;
@@ -31,7 +29,9 @@ select {
   border-radius: 5px;
   background-color: #2b3566;
   color: #fff;
-  font-size: 1.1rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: bold;
   cursor: pointer;
   opacity: 0.8;
 }

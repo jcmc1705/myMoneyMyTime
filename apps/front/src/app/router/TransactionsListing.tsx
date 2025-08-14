@@ -8,12 +8,12 @@ interface DataItem {
   id: number;
   value: number;
   description: string;
-  typeTransaction: string;
+  transactionType: string;
   dateTime: string;
 }
 
 const TransactionsListing = () => {
-  const url = "http://127.0.0.1:3000/api/transactions";
+  const url = "http://localhost:3000/api/transactions";
 
   const [data, setData] = useState<DataItem[]>([]);
 

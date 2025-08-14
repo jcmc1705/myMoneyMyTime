@@ -9,7 +9,7 @@ const TransactionsCreate = () => {
     dataForm: {
       description: "",
       value: "",
-      typeTransaction: "income",
+      transactionType: "income",
     },
   };
 

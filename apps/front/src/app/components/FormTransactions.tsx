@@ -11,17 +11,17 @@ const FormTransactions = ({
   const navigate = useNavigate();
   const [description, setDescription] = useState(dataForm.description);
   const [value, setValue] = useState<string | number>(dataForm.value);
-  const [typeTransaction, setTypeTransaction] = useState<any>(
-    dataForm.typeTransaction,
+  const [transactionType, setTransactionType] = useState<any>(
+    dataForm.transactionType,
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const handleTransaction = () => {
-    if (!description || !value || !typeTransaction)
+    if (!description || !value || !transactionType)
       return alert("Preencha todos os campos!");
     const transaction: TransactionProps = {
       description,
       value: +value,
-      typeTransaction,
+      transactionType,
     };
     switch (action) {
       case "create":
@@ -35,14 +35,14 @@ const FormTransactions = ({
   const saveTransaction = async ({
     description,
     value,
-    typeTransaction,
+    transactionType,
   }: TransactionProps) => {
     try {
       setIsLoading(true);
-      await fetch("http://127.0.0.1:3000/api/transactions", {
+      await fetch("http://localhost:3000/api/transactions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ description, value, typeTransaction }),
+        body: JSON.stringify({ description, value, transactionType }),
       });
       setIsLoading(false);
       navigate("/transactions");
@@ -53,24 +53,23 @@ const FormTransactions = ({
   const editTransaction = async ({
     description,
     value,
-    typeTransaction,
+    transactionType,
   }: TransactionProps) => {
     try {
       setIsLoading(true);
       const response = await fetch(
-        `http://127.0.0.1:3000/api/transactions/${idParams}`,
+        `http://localhost:3000/api/transactions/${idParams}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ description, value, typeTransaction }),
+          body: JSON.stringify({ description, value, transactionType }),
         },
       );
       setIsLoading(false);
-      const res = await response.json();
-      console.log(res);
+      await response.json();
       navigate("/transactions");
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
   if (isLoading) return <Loading />;
@@ -97,11 +96,11 @@ const FormTransactions = ({
         />
         <label>Tipo de transação</label>
         <select
-          name="typeTransaction"
-          id="typeTransaction"
+          name="transactionType"
+          id="transactionType"
           required
-          value={typeTransaction}
-          onChange={(e) => setTypeTransaction(e.target.value)}
+          value={transactionType}
+          onChange={(e) => setTransactionType(e.target.value)}
         >
           <option value="income">Entrada</option>
           <option value="expense">Saída</option>

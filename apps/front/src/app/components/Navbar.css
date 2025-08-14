@@ -1,13 +1,16 @@
 .navbar {
+  height: 60px;
+  width: 100%;
+  max-width: 100rem;
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  padding: 2rem 0;
+  justify-content: space-between;
+  align-items: center;
   background-color: #0e1129;
   color: #fff;
 }
 
 #logo {
+  margin-left: 5rem;
   cursor: pointer;
 }
 
@@ -15,6 +18,7 @@
   display: flex;
   gap: 1.5rem;
   font-weight: bold;
+  margin-right: 5rem;
 }
 
 .links a:hover {

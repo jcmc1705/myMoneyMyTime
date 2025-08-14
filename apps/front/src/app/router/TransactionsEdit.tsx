@@ -10,7 +10,7 @@ const TransactionsEdit = () => {
   const [transaction, setTransaction] = useState<TransactionProps | null>(null);
   useEffect(() => {
     const fetchTransaction = async () => {
-      const url = `http://127.0.0.1:3000/api/transactions/${id}`;
+      const url = `http://localhost:3000/api/transactions/${id}`;
       const res = await fetch(url);
       const data = await res.json();
       setTransaction(data);
@@ -24,7 +24,7 @@ const TransactionsEdit = () => {
     dataForm: {
       description: transaction ? transaction.description : "",
       value: transaction ? transaction.value : "",
-      typeTransaction: transaction ? transaction.typeTransaction : "income",
+      transactionType: transaction ? transaction.transactionType : "income",
     },
   };
   return (

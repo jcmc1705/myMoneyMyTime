@@ -1,16 +1,24 @@
-import { TransactionsUseCase } from "../../application/usercase/transactionsUserCase";
 import HttpServer from "../http/httpServer";
+import CreateItemUsecase from "../../application/usecase/CreateTransactionUsecase";
+import GetAllItemsUsecase from "../../application/usecase/GetAllTransactionsUsecase";
+import GetTransactionUsecase from "../../application/usecase/GetTransactionUsecase";
+import UpdateItemUsecase from "../../application/usecase/UpdateTransactionUsecase";
+import DeleteItemUsecase from "../../application/usecase/DeleteTransactionUsecase";
 
 export default class TransactionsController {
   constructor(
     readonly httpServer: HttpServer,
-    readonly transactionsUseCase: TransactionsUseCase,
+    readonly createTransaction: CreateItemUsecase,
+    readonly getAllTransactions: GetAllItemsUsecase,
+    readonly getTransaction: GetTransactionUsecase,
+    readonly updateTransaction: UpdateItemUsecase,
+    readonly deleteTransaction: DeleteItemUsecase,
   ) {
     httpServer.register(
       "post",
       "/api/transactions",
       async (params: any, body: any) => {
-        const output = await transactionsUseCase.createTransaction(body);
+        const output = await createTransaction.execute(body);
         return output;
       },
     );
@@ -19,28 +27,26 @@ export default class TransactionsController {
       "get",
       "/api/transactions",
       async (params: any, body: any) => {
-        const output = await transactionsUseCase.getTransactions();
+        const output = await getAllTransactions.execute();
         return output;
       },
     );
 
     httpServer.register(
       "get",
-      "/api/transactions/:id",
+      "/api/transactions/:transactionId",
       async (params: any, body: any) => {
-        const output = await transactionsUseCase.getTransaction(
-          Number(params.id),
-        );
+        const output = await getTransaction.execute(params.transactionId);
         return output;
       },
     );
 
     httpServer.register(
       "put",
-      "/api/transactions/:id",
+      "/api/transactions/:transactionId",
       async (params: any, body: any) => {
-        const output = await transactionsUseCase.updateTransaction(
-          Number(params.id),
+        const output = await updateTransaction.execute(
+          params.transactionId,
           body,
         );
         return output;
@@ -49,11 +55,9 @@ export default class TransactionsController {
 
     httpServer.register(
       "delete",
-      "/api/transactions/:id",
+      "/api/transactions/:transactionId",
       async (params: any, body: any) => {
-        const output = await transactionsUseCase.deleteTransaction(
-          Number(params.id),
-        );
+        const output = await deleteTransaction.execute(params.transactionId);
         return output;
       },
     );
