@@ -9,7 +9,7 @@ const swcJestConfig = JSON.parse(
 // Disable .swcrc look-up by SWC core because we're passing in swcJestConfig ourselves
 swcJestConfig.swcrc = false;
 
-export default {
+module.exports = {
   displayName: "api",
   preset: "../../jest.preset.js",
   testEnvironment: "node",
