@@ -1,11 +1,17 @@
 export type TransactionProps = {
-  value: number | "";
+  id: number;
+  value: number;
   description: string;
-  transactionType: "income" | "expense";
+  transactionType: string;
+  dateTime: Date;
 };
 
 export type FormTransactionProps = {
   action: "create" | "edit";
   idParams: string | undefined | null;
-  dataForm: TransactionProps;
+  dataForm: {
+    description: string;
+    value: number | "";
+    transactionType: string;
+  };
 };

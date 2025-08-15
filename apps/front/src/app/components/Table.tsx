@@ -1,45 +1,13 @@
-import { Link } from "react-router-dom";
 import "./Table.css";
-import Loading from "./Loading";
-import { useState } from "react";
+import { Link } from "react-router-dom";
+import { TransactionProps } from "../types/transaction";
 
-interface DataItem {
-  id: number;
-  value: number;
-  description: string;
-  transactionType: string;
-  dateTime: string;
-}
+type TableProps = {
+  data: TransactionProps[];
+  onDelete: (id: number) => void;
+};
 
-interface Props {
-  data: DataItem[];
-}
-
-const Table = ({ data }: Props) => {
-  const [transactions, setTransactions] = useState(data);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const handleDeleteTransaction = (id: number) => {
-    deleteTransaction(id);
-    const updatedTransactions = transactions.filter(
-      (transaction) => transaction.id !== id,
-    );
-    setTransactions(updatedTransactions);
-  };
-
-  const deleteTransaction = async (id: number) => {
-    try {
-      setIsLoading(true);
-      await fetch(`http://localhost:3000/api/transactions/${id}`, {
-        method: "DELETE",
-      });
-      setIsLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  if (isLoading) return <Loading />;
+const Table = ({ data, onDelete }: TableProps) => {
   return (
     <table>
       <tr>
@@ -47,7 +15,7 @@ const Table = ({ data }: Props) => {
         <th>Valor</th>
         <th>Ações</th>
       </tr>
-      {transactions.map(({ id, description, transactionType, value }) => (
+      {data.map(({ id, description, transactionType, value }) => (
         <tr key={id} className="transaction-control">
           <td>{description}</td>
           <td className={transactionType}>R$ {value.toFixed(2)}</td>
@@ -55,7 +23,7 @@ const Table = ({ data }: Props) => {
             <Link to={`/transactions/edit/${id}`}>
               <button>Editar</button>
             </Link>
-            <button onClick={() => handleDeleteTransaction(id)}>Excluir</button>
+            <button onClick={() => onDelete(id)}>Excluir</button>
           </td>
         </tr>
       ))}
