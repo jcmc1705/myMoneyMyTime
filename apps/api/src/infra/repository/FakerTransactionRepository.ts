@@ -19,6 +19,34 @@ export class FakerTransactionRepository implements TransactionRepository {
       description: "Teste FakerDB 02",
       dateTime: new Date("2025-03-03T21:38:24.633Z"),
     },
+    {
+      id: 3,
+      transactionType: "income",
+      value: 100,
+      description: "Teste FakerDB 03",
+      dateTime: new Date("2025-03-03T21:38:24.633Z"),
+    },
+    {
+      id: 4,
+      transactionType: "expense",
+      value: 150,
+      description: "Teste FakerDB 04",
+      dateTime: new Date("2025-03-03T21:38:24.633Z"),
+    },
+    {
+      id: 5,
+      transactionType: "expense",
+      value: 25,
+      description: "Teste FakerDB 05",
+      dateTime: new Date("2025-03-03T21:38:24.633Z"),
+    },
+    {
+      id: 6,
+      transactionType: "income",
+      value: 5,
+      description: "Teste FakerDB 06",
+      dateTime: new Date("2025-03-03T21:38:24.633Z"),
+    },
   ];
 
   async calculateSumByTransactionType(transactionType: "income" | "expense") {
@@ -31,8 +59,16 @@ export class FakerTransactionRepository implements TransactionRepository {
     return sum;
   }
 
-  async getAllTransactions() {
-    return this.database;
+  async getTotalTransactions() {
+    return this.database.length;
+  }
+
+  async getAllTransactions(limit: number, offset: number) {
+    let newDatabase = [];
+    for (let index = offset; index < offset + limit; index++) {
+      newDatabase.push(this.database[index]);
+    }
+    return newDatabase;
   }
 
   async getTransactionById(transactionId: number) {

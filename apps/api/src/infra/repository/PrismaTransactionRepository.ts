@@ -17,8 +17,15 @@ export class PrismaTransactionRepository implements TransactionRepository {
     return result._sum.value || 0;
   }
 
-  async getAllTransactions() {
-    return await this.prisma.transaction.findMany();
+  async getAllTransactions(limit: number, offset: number) {
+    return await this.prisma.transaction.findMany({
+      skip: offset,
+      take: limit,
+    });
+  }
+
+  async getTotalTransactions() {
+    return await this.prisma.transaction.count();
   }
 
   async getTransactionById(transactionId: number) {
