@@ -1,9 +1,9 @@
 export type TransactionProps = {
-  id: number;
+  id?: number;
   value: number;
   description: string;
   transactionType: string;
-  dateTime: Date;
+  dateTime?: Date;
 };
 
 export type FormTransactionProps = {

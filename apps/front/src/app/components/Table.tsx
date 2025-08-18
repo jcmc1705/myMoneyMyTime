@@ -4,7 +4,7 @@ import { TransactionProps } from "../types/transaction";
 
 type TableProps = {
   data: TransactionProps[];
-  onDelete: (id: number) => void;
+  onDelete: (id: number | undefined) => void;
 };
 
 const Table = ({ data, onDelete }: TableProps) => {
