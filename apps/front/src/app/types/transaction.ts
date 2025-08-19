@@ -7,9 +7,8 @@ export type TransactionProps = {
 };
 
 export type FormTransactionProps = {
-  action: "create" | "edit";
-  idParams: string | undefined | null;
-  dataForm: {
+  action: (transaction: TransactionProps) => void;
+  dataForm?: {
     description: string;
     value: number | "";
     transactionType: string;

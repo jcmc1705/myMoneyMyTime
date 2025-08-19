@@ -7,16 +7,16 @@ import Navbar from "./components/Navbar";
 import Container from "./components/Container";
 import Alert from "./components/Alert";
 
-export type colorType = "success" | "error" | null;
+export type statusType = "success" | "error" | null;
 export type LayoutContextType = {
-  handleAlert: (message: string, color: colorType) => void;
+  handleAlert: (message: string, status: statusType) => void;
 };
 
 function App() {
   const [showAlert, setShowAlert] = useState(false);
-  const [color, setColor] = useState<colorType>(null);
+  const [color, setColor] = useState<statusType>(null);
   const [message, setMessage] = useState<string>("");
-  function handleAlert(message: string, color: colorType) {
+  function handleAlert(message: string, color: statusType) {
     setMessage(message);
     setColor(color);
     setShowAlert(true);

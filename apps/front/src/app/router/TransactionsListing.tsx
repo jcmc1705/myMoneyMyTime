@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
-
-import Table from "../components/Table";
+import { LayoutContextType } from "../app";
+import { TransactionProps } from "../types/transaction";
 import Title from "../components/Title";
+import Table from "../components/Table";
 import Loading from "../components/Loading";
 import Pagination from "../components/Pagination";
-import { TransactionProps } from "../types/transaction";
-import { LayoutContextType } from "../app";
 
 const TransactionsListing = () => {
   const [transactions, setTransactions] = useState<TransactionProps[]>([]);
