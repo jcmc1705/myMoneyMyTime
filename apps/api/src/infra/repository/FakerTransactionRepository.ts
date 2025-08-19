@@ -65,8 +65,11 @@ export class FakerTransactionRepository implements TransactionRepository {
 
   async getAllTransactions(limit: number, offset: number) {
     let newDatabase = [];
+    const databaseInDescOrder = this.database.sort(
+      (a: any, b: any) => b.id - a.id,
+    );
     for (let index = offset; index < offset + limit; index++) {
-      newDatabase.push(this.database[index]);
+      newDatabase.push(databaseInDescOrder[index]);
     }
     return newDatabase;
   }

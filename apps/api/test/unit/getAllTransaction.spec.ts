@@ -14,24 +14,17 @@ describe("GetAllTransactions", () => {
     });
     expect(response.data).toEqual([
       {
-        id: 1,
+        id: 6,
         transactionType: "income",
-        value: 100,
-        description: "Teste FakerDB 01",
+        value: 5,
+        description: "Teste FakerDB 06",
         dateTime: new Date("2025-03-03T21:38:24.633Z"),
       },
       {
-        id: 2,
+        id: 5,
         transactionType: "expense",
-        value: 15,
-        description: "Teste FakerDB 02",
-        dateTime: new Date("2025-03-03T21:38:24.633Z"),
-      },
-      {
-        id: 3,
-        transactionType: "income",
-        value: 100,
-        description: "Teste FakerDB 03",
+        value: 25,
+        description: "Teste FakerDB 05",
         dateTime: new Date("2025-03-03T21:38:24.633Z"),
       },
       {
@@ -42,10 +35,17 @@ describe("GetAllTransactions", () => {
         dateTime: new Date("2025-03-03T21:38:24.633Z"),
       },
       {
-        id: 5,
+        id: 3,
+        transactionType: "income",
+        value: 100,
+        description: "Teste FakerDB 03",
+        dateTime: new Date("2025-03-03T21:38:24.633Z"),
+      },
+      {
+        id: 2,
         transactionType: "expense",
-        value: 25,
-        description: "Teste FakerDB 05",
+        value: 15,
+        description: "Teste FakerDB 02",
         dateTime: new Date("2025-03-03T21:38:24.633Z"),
       },
     ]);
@@ -58,10 +58,10 @@ describe("GetAllTransactions", () => {
     });
     expect(response.data).toEqual([
       {
-        id: 6,
+        id: 1,
         transactionType: "income",
-        value: 5,
-        description: "Teste FakerDB 06",
+        value: 100,
+        description: "Teste FakerDB 01",
         dateTime: new Date("2025-03-03T21:38:24.633Z"),
       },
     ]);

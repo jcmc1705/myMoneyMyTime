@@ -13,11 +13,7 @@ const TransactionsEdit = () => {
   const { handleAlert } = useOutletContext<LayoutContextType>();
 
   const { id } = useParams();
-  const [transaction, setTransaction] = useState<TransactionProps>({
-    description: "",
-    value: 0,
-    transactionType: "income",
-  });
+  const [transaction, setTransaction] = useState<TransactionProps>();
   const [loading, setLoading] = useState<boolean>(false);
   const updateTransaction = async ({
     description,

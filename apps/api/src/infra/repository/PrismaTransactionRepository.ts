@@ -19,6 +19,9 @@ export class PrismaTransactionRepository implements TransactionRepository {
 
   async getAllTransactions(limit: number, offset: number) {
     return await this.prisma.transaction.findMany({
+      orderBy: {
+        id: "desc",
+      },
       skip: offset,
       take: limit,
     });
