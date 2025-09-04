@@ -9,7 +9,7 @@ export default class DashboardController {
     httpServer.register(
       "get",
       "/api/dashboard",
-      async (params: any, body: any) => {
+      async (params: any, query: any, body: any) => {
         const output = await getDashboardUsecase.execute();
         return output;
       },

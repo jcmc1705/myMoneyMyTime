@@ -1,78 +1,27 @@
 import "./FormTransactions.css";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { FormTransactionProps, TransactionProps } from "../types/transaction";
-import Loading from "./Loading";
-const FormTransactions = ({
-  action,
-  idParams,
-  dataForm,
-}: FormTransactionProps) => {
-  const navigate = useNavigate();
-  const [description, setDescription] = useState(dataForm.description);
-  const [value, setValue] = useState<string | number>(dataForm.value);
-  const [transactionType, setTransactionType] = useState<any>(
-    dataForm.transactionType,
+import { FormTransactionProps } from "../types/transaction";
+const FormTransactions = ({ action, dataForm }: FormTransactionProps) => {
+  const [description, setDescription] = useState<string>(
+    dataForm ? dataForm.description : "",
   );
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [value, setValue] = useState<string | number>(
+    dataForm ? dataForm.value : "",
+  );
+  const [transactionType, setTransactionType] = useState<string>(
+    dataForm ? dataForm.transactionType : "income",
+  );
+
   const handleTransaction = () => {
     if (!description || !value || !transactionType)
       return alert("Preencha todos os campos!");
-    const transaction: TransactionProps = {
+    action({
       description,
       value: +value,
       transactionType,
-    };
-    switch (action) {
-      case "create":
-        saveTransaction(transaction);
-        break;
-      case "edit":
-        editTransaction(transaction);
-        break;
-    }
+    });
   };
-  const saveTransaction = async ({
-    description,
-    value,
-    transactionType,
-  }: TransactionProps) => {
-    try {
-      setIsLoading(true);
-      await fetch("http://localhost:3000/api/transactions", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ description, value, transactionType }),
-      });
-      setIsLoading(false);
-      navigate("/transactions");
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  const editTransaction = async ({
-    description,
-    value,
-    transactionType,
-  }: TransactionProps) => {
-    try {
-      setIsLoading(true);
-      const response = await fetch(
-        `http://localhost:3000/api/transactions/${idParams}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ description, value, transactionType }),
-        },
-      );
-      setIsLoading(false);
-      await response.json();
-      navigate("/transactions");
-    } catch (err) {
-      console.error(err);
-    }
-  };
-  if (isLoading) return <Loading />;
+
   return (
     <div className="form-transaction">
       <form>

@@ -1,36 +1,57 @@
 import { useState, useEffect } from "react";
-
-import Table from "../components/Table";
+import { useOutletContext } from "react-router-dom";
+import { LayoutContextType } from "../app";
+import { TransactionProps } from "../types/transaction";
 import Title from "../components/Title";
+import Table from "../components/Table";
 import Loading from "../components/Loading";
-
-interface DataItem {
-  id: number;
-  value: number;
-  description: string;
-  transactionType: string;
-  dateTime: string;
-}
+import Pagination from "../components/Pagination";
 
 const TransactionsListing = () => {
-  const url = "http://localhost:3000/api/transactions";
+  const [transactions, setTransactions] = useState<TransactionProps[]>([]);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [page, setPage] = useState<number>(1);
+  const [limit] = useState<number>(5);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const [data, setData] = useState<DataItem[]>([]);
+  const { handleAlert } = useOutletContext<LayoutContextType>();
+
+  async function getData() {
+    try {
+      setLoading(true);
+      const url = `http://localhost:3000/api/transactions/?page=${page}&limit=${limit}`;
+      const res = await fetch(url);
+      const response = await res.json();
+      setTransactions(response.data);
+      setTotalPages(response.totalPages);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function deleteTransaction(transactionId: number | undefined) {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `http://localhost:3000/api/transactions/${transactionId}`,
+        {
+          method: "DELETE",
+        },
+      );
+      const responseJson = await response.json();
+      getData();
+      handleAlert(responseJson.message, "success");
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   useEffect(() => {
-    async function getData() {
-      try {
-        const res = await fetch(url);
-        const response: DataItem[] = await res.json();
-        setData(response);
-      } catch (err) {
-        console.log(err);
-      }
-    }
     getData();
-  }, []);
+  }, [page]);
 
-  if (data.length === 0) return <Loading />;
+  if (loading) return <Loading />;
 
   return (
     <div className="container-transactions">
@@ -39,7 +60,8 @@ const TransactionsListing = () => {
         returnOption={false}
         redirectLink="/transactions/create"
       />
-      <Table data={data} />
+      <Table data={transactions} onDelete={deleteTransaction} />
+      <Pagination page={page} totalPages={totalPages} setPage={setPage} />
     </div>
   );
 };

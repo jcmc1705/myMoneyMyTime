@@ -7,5 +7,5 @@ export type CardsProps = {
 export type CardProps = {
   title: string;
   value: number;
-  color: string;
+  color: "positive" | "negative" | null;
 };

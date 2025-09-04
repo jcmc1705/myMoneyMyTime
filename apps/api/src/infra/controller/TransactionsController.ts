@@ -17,7 +17,7 @@ export default class TransactionsController {
     httpServer.register(
       "post",
       "/api/transactions",
-      async (params: any, body: any) => {
+      async (params: any, query: any, body: any) => {
         const output = await createTransaction.execute(body);
         return output;
       },
@@ -26,8 +26,8 @@ export default class TransactionsController {
     httpServer.register(
       "get",
       "/api/transactions",
-      async (params: any, body: any) => {
-        const output = await getAllTransactions.execute();
+      async (params: any, query: any, body: any) => {
+        const output = await getAllTransactions.execute(query);
         return output;
       },
     );
@@ -35,7 +35,7 @@ export default class TransactionsController {
     httpServer.register(
       "get",
       "/api/transactions/:transactionId",
-      async (params: any, body: any) => {
+      async (params: any, query: any, body: any) => {
         const output = await getTransaction.execute(params.transactionId);
         return output;
       },
@@ -44,7 +44,7 @@ export default class TransactionsController {
     httpServer.register(
       "put",
       "/api/transactions/:transactionId",
-      async (params: any, body: any) => {
+      async (params: any, query: any, body: any) => {
         const output = await updateTransaction.execute(
           params.transactionId,
           body,
@@ -56,7 +56,7 @@ export default class TransactionsController {
     httpServer.register(
       "delete",
       "/api/transactions/:transactionId",
-      async (params: any, body: any) => {
+      async (params: any, query: any, body: any) => {
         const output = await deleteTransaction.execute(params.transactionId);
         return output;
       },
