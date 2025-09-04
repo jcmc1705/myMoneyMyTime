@@ -4,7 +4,8 @@ import { CardProps } from "../types/dashboard";
 const Card = ({ title, value, color }: CardProps) => {
   let cssColor;
   if (color === "positive") cssColor = "#008000";
-  if (color === "negative") cssColor = "#ff0000";
+  else if (color === "negative") cssColor = "#ff0000";
+  else cssColor = "#ff0000";
   return (
     <div className="cards-control">
       <div className="card-title">{title}</div>

@@ -69,7 +69,9 @@ export class FakerTransactionRepository implements TransactionRepository {
       (a: any, b: any) => b.id - a.id,
     );
     for (let index = offset; index < offset + limit; index++) {
-      newDatabase.push(databaseInDescOrder[index]);
+      if (databaseInDescOrder[index] !== undefined) {
+        newDatabase.push(databaseInDescOrder[index]);
+      }
     }
     return newDatabase;
   }
