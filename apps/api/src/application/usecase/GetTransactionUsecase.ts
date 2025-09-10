@@ -3,7 +3,7 @@ import Id from "../../domain/vo/Id";
 
 export default class GetTransactionUsecase {
   constructor(readonly transactionRepository: TransactionRepository) {}
-  async execute(transactionId: any) {
+  async execute(transactionId: number) {
     transactionId = new Id(transactionId).getValue();
     const transaction =
       await this.transactionRepository.getTransactionById(transactionId);

@@ -1,7 +1,6 @@
 export default class Id {
   private value: number;
-  constructor(id: any) {
-    if (typeof id === "string") id = Number(id);
+  constructor(id: number) {
     if (!this.isValidItemId(id)) {
       throw new Error("Id inválido!");
     }

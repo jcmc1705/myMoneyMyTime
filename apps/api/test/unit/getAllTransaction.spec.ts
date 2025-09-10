@@ -8,10 +8,9 @@ describe("GetAllTransactions", () => {
   );
 
   it("Should get all transactions from the first page", async () => {
-    const response = await getAllTransactionsUsecase.execute({
-      page: 1,
-      limit: 5,
-    });
+    const page = 1;
+    const limit = 5;
+    const response = await getAllTransactionsUsecase.execute(page, limit);
     expect(response.data).toEqual([
       {
         id: 6,
@@ -52,10 +51,9 @@ describe("GetAllTransactions", () => {
   });
 
   it("Should get all transactions from the second page", async () => {
-    const response = await getAllTransactionsUsecase.execute({
-      page: 2,
-      limit: 5,
-    });
+    const page = 2;
+    const limit = 5;
+    const response = await getAllTransactionsUsecase.execute(page, limit);
     expect(response.data).toEqual([
       {
         id: 1,
@@ -67,10 +65,9 @@ describe("GetAllTransactions", () => {
     ]);
   });
   it("Should get total pages", async () => {
-    const response = await getAllTransactionsUsecase.execute({
-      page: 2,
-      limit: 5,
-    });
+    const page = 2;
+    const limit = 5;
+    const response = await getAllTransactionsUsecase.execute(page, limit);
     expect(response.totalPages).toEqual(2);
   });
 });

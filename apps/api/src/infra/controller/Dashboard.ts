@@ -6,13 +6,9 @@ export default class DashboardController {
     readonly httpServer: HttpServer,
     readonly getDashboardUsecase: GetDashboardUsecase,
   ) {
-    httpServer.register(
-      "get",
-      "/api/dashboard",
-      async (params: any, query: any, body: any) => {
-        const output = await getDashboardUsecase.execute();
-        return output;
-      },
-    );
+    httpServer.register("get", "/api/dashboard", async () => {
+      const output = await getDashboardUsecase.execute();
+      return output;
+    });
   }
 }

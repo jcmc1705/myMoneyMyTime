@@ -4,6 +4,22 @@ import GetAllItemsUsecase from "../../application/usecase/GetAllTransactionsUsec
 import GetTransactionUsecase from "../../application/usecase/GetTransactionUsecase";
 import UpdateItemUsecase from "../../application/usecase/UpdateTransactionUsecase";
 import DeleteItemUsecase from "../../application/usecase/DeleteTransactionUsecase";
+import { TransactionOutput } from "../../application/repository/TransactionRepository";
+
+export type ParamsTransactionType = {
+  transactionId: number;
+};
+
+export type BodyTransactionTypes = {
+  description: string;
+  value: number;
+  transactionType: "income" | "expense";
+};
+
+export type QueryBodyTransactionTypes = {
+  page: string;
+  limit: string;
+};
 
 export default class TransactionsController {
   constructor(
@@ -14,52 +30,53 @@ export default class TransactionsController {
     readonly updateTransaction: UpdateItemUsecase,
     readonly deleteTransaction: DeleteItemUsecase,
   ) {
-    httpServer.register(
-      "post",
-      "/api/transactions",
-      async (params: any, query: any, body: any) => {
-        const output = await createTransaction.execute(body);
-        return output;
-      },
-    );
+    httpServer.register<
+      { data: TransactionOutput; message: string },
+      { body: BodyTransactionTypes }
+    >("post", "/api/transactions", async ({ body }) => {
+      const output = await createTransaction.execute(body);
+      return output;
+    });
 
-    httpServer.register(
-      "get",
-      "/api/transactions",
-      async (params: any, query: any, body: any) => {
-        const output = await getAllTransactions.execute(query);
-        return output;
-      },
-    );
+    httpServer.register<
+      { data: TransactionOutput[]; totalPages: number },
+      { query: QueryBodyTransactionTypes }
+    >("get", "/api/transactions", async ({ query }) => {
+      const { page, limit } = query;
+      const output = await getAllTransactions.execute(
+        Number(page),
+        Number(limit),
+      );
+      return output;
+    });
 
-    httpServer.register(
-      "get",
-      "/api/transactions/:transactionId",
-      async (params: any, query: any, body: any) => {
-        const output = await getTransaction.execute(params.transactionId);
-        return output;
-      },
-    );
+    httpServer.register<
+      TransactionOutput,
+      { params: { transactionId: string } }
+    >("get", "/api/transactions/:transactionId", async ({ params }) => {
+      const output = await getTransaction.execute(Number(params.transactionId));
+      return output;
+    });
 
-    httpServer.register(
-      "put",
-      "/api/transactions/:transactionId",
-      async (params: any, query: any, body: any) => {
-        const output = await updateTransaction.execute(
-          params.transactionId,
-          body,
-        );
-        return output;
-      },
-    );
+    httpServer.register<
+      { data: TransactionOutput; message: string },
+      { params: { transactionId: string }; body: BodyTransactionTypes }
+    >("put", "/api/transactions/:transactionId", async ({ params, body }) => {
+      const output = await updateTransaction.execute(
+        Number(params.transactionId),
+        body,
+      );
+      return output;
+    });
 
-    httpServer.register(
-      "delete",
-      "/api/transactions/:transactionId",
-      async (params: any, query: any, body: any) => {
-        const output = await deleteTransaction.execute(params.transactionId);
-        return output;
-      },
-    );
+    httpServer.register<
+      { message: string },
+      { params: { transactionId: string } }
+    >("delete", "/api/transactions/:transactionId", async ({ params }) => {
+      const output = await deleteTransaction.execute(
+        Number(params.transactionId),
+      );
+      return output;
+    });
   }
 }

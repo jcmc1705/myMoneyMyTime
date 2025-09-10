@@ -4,7 +4,7 @@ import Id from "../../domain/vo/Id";
 
 export default class DeleteTransactionUsecase {
   constructor(readonly transactionRepository: TransactionRepository) {}
-  async execute(transactionId: any) {
+  async execute(transactionId: number) {
     transactionId = new Id(transactionId).getValue();
     const getItemUsecase = new GetTransactionUsecase(
       this.transactionRepository,
