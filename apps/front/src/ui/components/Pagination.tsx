@@ -5,6 +5,7 @@ type PaginationProps = {
   totalPages: number;
   setPage: (newPage: number) => void;
 };
+
 const Pagination = ({ page, totalPages, setPage }: PaginationProps) => {
   return (
     <div className="container-pagination">

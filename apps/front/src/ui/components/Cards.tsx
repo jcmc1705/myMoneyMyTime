@@ -1,8 +1,8 @@
 import "./Cards.css";
-import { CardsProps } from "../types/dashboard";
 import Card from "./Card";
+import { Dashboad } from "../../domain/dashboard";
 
-const Cards = ({ incomes, expenses, balance }: CardsProps) => {
+const Cards = ({ incomes, expenses, balance }: Dashboad) => {
   const balanceColor = (balance: number) => {
     const [firstString] = [...balance.toString()];
     return firstString === "-" ? "negative" : "positive";

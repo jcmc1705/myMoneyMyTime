@@ -1,8 +1,11 @@
+import "./Title.css";
 import { Link, useNavigate } from "react-router-dom";
 
-import { TitleProps } from "../types/title";
-
-import "./Title.css";
+export type TitleProps = {
+  returnOption: boolean;
+  title: string;
+  redirectLink: string;
+};
 
 const Title = ({ title, returnOption, redirectLink }: TitleProps) => {
   const navigate = useNavigate();

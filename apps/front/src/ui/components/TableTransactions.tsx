@@ -1,13 +1,16 @@
-import "./Table.css";
+import "./TableTransactions.css";
 import { Link } from "react-router-dom";
-import { TransactionProps } from "../types/transaction";
+import { Transaction } from "../../domain/transaction";
 
-type TableProps = {
-  data: TransactionProps[];
-  onDelete: (id: number | undefined) => void;
+type TableTransactionsProps = {
+  transactions: Transaction[];
+  onDelete: (transactionId: number) => void;
 };
 
-const Table = ({ data, onDelete }: TableProps) => {
+const TableTransactions = ({
+  transactions,
+  onDelete,
+}: TableTransactionsProps) => {
   return (
     <table>
       <tr>
@@ -15,7 +18,7 @@ const Table = ({ data, onDelete }: TableProps) => {
         <th>Valor</th>
         <th>Ações</th>
       </tr>
-      {data.map(({ id, description, transactionType, value }) => (
+      {transactions.map(({ id, description, transactionType, value }) => (
         <tr key={id} className="transaction-control">
           <td>{description}</td>
           <td className={transactionType}>R$ {value.toFixed(2)}</td>
@@ -23,7 +26,7 @@ const Table = ({ data, onDelete }: TableProps) => {
             <Link to={`/transactions/edit/${id}`}>
               <button>Editar</button>
             </Link>
-            <button onClick={() => onDelete(id)}>Excluir</button>
+            <button onClick={() => onDelete(Number(id))}>Excluir</button>
           </td>
         </tr>
       ))}
@@ -31,4 +34,4 @@ const Table = ({ data, onDelete }: TableProps) => {
   );
 };
 
-export default Table;
+export default TableTransactions;

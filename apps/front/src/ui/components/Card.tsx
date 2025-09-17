@@ -1,5 +1,10 @@
 import "./Card.css";
-import { CardProps } from "../types/dashboard";
+
+type CardProps = {
+  title: string;
+  value: number;
+  color: "positive" | "negative" | null;
+};
 
 const Card = ({ title, value, color }: CardProps) => {
   let cssColor;

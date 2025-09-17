@@ -1,18 +1,22 @@
 import "./FormTransactions.css";
 import { useState } from "react";
-import { FormTransactionProps } from "../types/transaction";
-const FormTransactions = ({ action, dataForm }: FormTransactionProps) => {
+import { Transaction } from "../../domain/transaction";
+
+type FormTransactionProps = {
+  action: (transaction: Transaction) => void;
+  data?: Transaction;
+};
+
+const FormTransactions = ({ action, data }: FormTransactionProps) => {
   const [description, setDescription] = useState<string>(
-    dataForm ? dataForm.description : "",
+    data ? data.description : "",
   );
-  const [value, setValue] = useState<string | number>(
-    dataForm ? dataForm.value : "",
-  );
-  const [transactionType, setTransactionType] = useState<string>(
-    dataForm ? dataForm.transactionType : "income",
+  const [value, setValue] = useState<string | number>(data ? data.value : "");
+  const [transactionType, setTransactionType] = useState<"income" | "expense">(
+    data ? data.transactionType : "income",
   );
 
-  const handleTransaction = () => {
+  async function handleTransaction() {
     if (!description || !value || !transactionType)
       return alert("Preencha todos os campos!");
     action({
@@ -20,7 +24,13 @@ const FormTransactions = ({ action, dataForm }: FormTransactionProps) => {
       value: +value,
       transactionType,
     });
-  };
+  }
+
+  async function handleTransactionType(value: string) {
+    if (value === "income" || value === "expense") {
+      setTransactionType(value);
+    }
+  }
 
   return (
     <div className="form-transaction">
@@ -49,7 +59,7 @@ const FormTransactions = ({ action, dataForm }: FormTransactionProps) => {
           id="transactionType"
           required
           value={transactionType}
-          onChange={(e) => setTransactionType(e.target.value)}
+          onChange={(e) => handleTransactionType(e.target.value)}
         >
           <option value="income">Entrada</option>
           <option value="expense">Saída</option>

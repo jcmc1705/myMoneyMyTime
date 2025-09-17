@@ -1,5 +1,5 @@
-import ErrorPageComponent from "../components/ErrorPageComponent";
-import Navbar from "../components/Navbar";
+import Navbar from "../../ui/components/Navbar";
+import ErrorPageComponent from "../../ui/components/ErrorPageComponent";
 
 const ErrorPage = () => {
   return (

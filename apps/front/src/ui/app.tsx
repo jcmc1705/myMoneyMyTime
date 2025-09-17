@@ -1,22 +1,20 @@
-import { Outlet } from "react-router-dom";
-
 import "./app.css";
-
 import { useState } from "react";
+import { Outlet } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Container from "./components/Container";
 import Alert from "./components/Alert";
 
-export type statusType = "success" | "error" | null;
+export type StatusType = "success" | "error" | null;
 export type LayoutContextType = {
-  handleAlert: (message: string, status: statusType) => void;
+  handleAlert: (message: string, status: StatusType) => void;
 };
 
 function App() {
   const [showAlert, setShowAlert] = useState(false);
-  const [color, setColor] = useState<statusType>(null);
+  const [color, setColor] = useState<StatusType>(null);
   const [message, setMessage] = useState<string>("");
-  function handleAlert(message: string, color: statusType) {
+  function handleAlert(message: string, color: StatusType) {
     setMessage(message);
     setColor(color);
     setShowAlert(true);
