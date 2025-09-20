@@ -1,6 +1,6 @@
 import "./FormTransactions.css";
 import { useState } from "react";
-import { Transaction } from "../../domain/transaction";
+import { Transaction } from "../../domain/Transaction";
 
 type FormTransactionProps = {
   action: (transaction: Transaction) => void;

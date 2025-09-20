@@ -1,6 +1,6 @@
 import "./TableTransactions.css";
 import { Link } from "react-router-dom";
-import { Transaction } from "../../domain/transaction";
+import { Transaction } from "../../domain/Transaction";
 
 type TableTransactionsProps = {
   transactions: Transaction[];

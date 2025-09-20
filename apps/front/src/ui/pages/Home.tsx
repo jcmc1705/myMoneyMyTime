@@ -1,19 +1,33 @@
 import { useEffect, useState } from "react";
-import { getDashboardUsecase } from "../../application/dashboard/getDashboard";
-import { Dashboad } from "../../domain/dashboard";
+import { FetchAdapter } from "../../infra/http/HttpClient";
+import { DashboardGatewayHttp } from "../../infra/gateway/DashboardGateway";
+import { GetDashboardUsecase } from "../../application/usecase/Dashboard/getDashboard";
+import { Dashboard } from "../../domain/Dashboard";
 import Cards from "../../ui/components/Cards";
 import Loading from "../../ui/components/Loading";
 
 const Home = () => {
-  const [data, setData] = useState<Dashboad>({
+  const httpClient = new FetchAdapter();
+  const dashboardGateway = new DashboardGatewayHttp(httpClient);
+  const getDashboardUsecase = new GetDashboardUsecase(dashboardGateway);
+  const [data, setData] = useState<Dashboard>({
     incomes: 0,
     expenses: 0,
     balance: 0,
   });
-  const [loading, setLoading] = useState<boolean>(false);
-
+  const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
-    getDashboardUsecase(setLoading, setData);
+    async function fetchDashboard() {
+      try {
+        const data = await getDashboardUsecase.execute();
+        setData(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchDashboard();
   }, []);
 
   if (loading) return <Loading />;
