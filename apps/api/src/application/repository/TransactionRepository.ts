@@ -18,6 +18,12 @@ export default interface TransactionRepository {
   deleteTransaction(transactionId: number): Promise<TransactionOutput>;
 }
 
+export type TransactionInput = {
+  description: string;
+  value: number;
+  transactionType: "income" | "expense";
+};
+
 export type TransactionOutput = {
   id: number;
   description: string;

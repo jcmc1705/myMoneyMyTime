@@ -4,22 +4,10 @@ import GetAllItemsUsecase from "../../application/usecase/GetAllTransactionsUsec
 import GetTransactionUsecase from "../../application/usecase/GetTransactionUsecase";
 import UpdateItemUsecase from "../../application/usecase/UpdateTransactionUsecase";
 import DeleteItemUsecase from "../../application/usecase/DeleteTransactionUsecase";
-import { TransactionOutput } from "../../application/repository/TransactionRepository";
-
-export type ParamsTransactionType = {
-  transactionId: number;
-};
-
-export type BodyTransactionTypes = {
-  description: string;
-  value: number;
-  transactionType: "income" | "expense";
-};
-
-export type QueryBodyTransactionTypes = {
-  page: string;
-  limit: string;
-};
+import {
+  TransactionInput,
+  TransactionOutput,
+} from "../../application/repository/TransactionRepository";
 
 export default class TransactionsController {
   constructor(
@@ -32,7 +20,7 @@ export default class TransactionsController {
   ) {
     httpServer.register<
       { data: TransactionOutput; message: string },
-      { body: BodyTransactionTypes }
+      { body: TransactionInput }
     >("post", "/api/transactions", async ({ body }) => {
       const output = await createTransaction.execute(body);
       return output;
@@ -40,7 +28,12 @@ export default class TransactionsController {
 
     httpServer.register<
       { data: TransactionOutput[]; totalPages: number },
-      { query: QueryBodyTransactionTypes }
+      {
+        query: {
+          page: string;
+          limit: string;
+        };
+      }
     >("get", "/api/transactions", async ({ query }) => {
       const { page, limit } = query;
       const output = await getAllTransactions.execute(
@@ -60,7 +53,7 @@ export default class TransactionsController {
 
     httpServer.register<
       { data: TransactionOutput; message: string },
-      { params: { transactionId: string }; body: BodyTransactionTypes }
+      { params: { transactionId: string }; body: TransactionInput }
     >("put", "/api/transactions/:transactionId", async ({ params, body }) => {
       const output = await updateTransaction.execute(
         Number(params.transactionId),
