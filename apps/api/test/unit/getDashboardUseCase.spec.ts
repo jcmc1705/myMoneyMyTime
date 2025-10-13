@@ -7,9 +7,9 @@ describe("GetDashboard", () => {
     const getDashboardUsecase = new GetDashboardUsecase(transactionRepository);
     const response = await getDashboardUsecase.execute();
     expect(response).toEqual({
-      incomes: "100.00",
-      expenses: "15.00",
-      balance: "85.00",
+      incomes: "205.00",
+      expenses: "190.00",
+      balance: "15.00",
     });
   });
 });

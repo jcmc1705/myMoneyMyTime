@@ -1,6 +1,6 @@
 import { ExpressAdapter } from "./infra/http/httpServer";
 import { PrismaTransactionRepository } from "./infra/repository/PrismaTransactionRepository";
-import DashboardController from "./infra/controller/Dashboard";
+import DashboardController from "./infra/controller/DashboardController";
 import GetDashboardUsecase from "./application/usecase/GetDashboardUsecase";
 import TransactionsController from "./infra/controller/TransactionsController";
 import GetAllTransactionsUsecase from "./application/usecase/GetAllTransactionsUsecase";

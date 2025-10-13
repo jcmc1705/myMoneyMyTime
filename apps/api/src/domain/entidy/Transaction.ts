@@ -6,12 +6,20 @@ export default class Transaction {
   private description: Description;
   private value: Value;
   private transactionType: TransactionType;
-  constructor(description: string, value: number, transactionType: string) {
+  constructor(
+    description: string,
+    value: number,
+    transactionType: "income" | "expense",
+  ) {
     this.description = new Description(description);
     this.value = new Value(value);
     this.transactionType = new TransactionType(transactionType);
   }
-  static create(description: string, value: number, transactionType: string) {
+  static create(
+    description: string,
+    value: number,
+    transactionType: "income" | "expense",
+  ) {
     return new Transaction(description, value, transactionType);
   }
   getDescription() {

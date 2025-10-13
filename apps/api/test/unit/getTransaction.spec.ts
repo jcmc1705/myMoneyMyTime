@@ -19,7 +19,7 @@ describe("GetTransaction", () => {
     });
   });
   it('Should throw error "Transação não encontrada!"', async () => {
-    const transactionId = 3;
+    const transactionId = 10;
     await expect(getTransactionUsecase.execute(transactionId)).rejects.toThrow(
       "Transação não encontrada!",
     );

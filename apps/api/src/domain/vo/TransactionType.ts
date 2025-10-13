@@ -1,6 +1,6 @@
 export default class TransactionType {
   private value: "income" | "expense";
-  constructor(transactionType: string) {
+  constructor(transactionType: "income" | "expense") {
     if (!this.isValid(transactionType))
       throw new Error("Tipo de transação inválida!");
     this.value = transactionType;

@@ -4,7 +4,11 @@ export default interface TransactionRepository {
   calculateSumByTransactionType(
     transactionType: "income" | "expense",
   ): Promise<number>;
-  getAllTransactions(): Promise<TransactionOutput[]>;
+  getTotalTransactions(): Promise<number>;
+  getAllTransactions(
+    limit: number,
+    offset: number,
+  ): Promise<TransactionOutput[]>;
   getTransactionById(transactionId: number): Promise<TransactionOutput | null>;
   createTransaction(input: Transaction): Promise<TransactionOutput>;
   updateTransaction(
@@ -13,6 +17,12 @@ export default interface TransactionRepository {
   ): Promise<TransactionOutput>;
   deleteTransaction(transactionId: number): Promise<TransactionOutput>;
 }
+
+export type TransactionInput = {
+  description: string;
+  value: number;
+  transactionType: "income" | "expense";
+};
 
 export type TransactionOutput = {
   id: number;
